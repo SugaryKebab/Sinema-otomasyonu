@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style/style.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+  <link href="style/panel.css" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Sinema Panel </div>
+      <div class="list-group list-group-flush">
+        <a href="#" id="salon"  class="list-group-item list-group-item-action bg-light">Salonları Yönet</a>
+        <a  href="#"id="film" class="list-group-item list-group-item-action bg-light">Filmleri Yönet</a>
+        <a href="#" id="seans" class="list-group-item list-group-item-action bg-light">Seansları Yönet</a>
+        <a href="#" id="kampanya" class="list-group-item list-group-item-action bg-light">Anasayfa Kampanyalar</a>
+        <a  href="#"id="biletler" class="list-group-item list-group-item-action bg-light">Biletler</a>
+      </div>
+    </div>
+
+
+    <div id="page-content-wrapper">
+      <div class="container">
+
+     <div class="salonlar" style="margin-top: 50px;">
+       <h2>Salonları Düzenle</h2>
+       <button type="button" class="btn btn-primary float-right">Yeni Salon Ekle</button>
+      <table class="table" style="margin-top: 50px;">
+  
+        <thead>
+          <tr>
+            <th scope="col">Salon adı</th>
+            <th scope="col">Sıra Sayısı </th>
+            <th scope="col">Toplam Koltuk Sayısı</th>
+            <th scope="col">İşlemler</th>
+           
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Salon 1</td>
+            <td>5 </td>
+            <td>30</td>
+          </tr>
+          <tr>
+
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </table>
+
+     </div>
+
+
+
+
+
+
+    </div>
+  </div>
+
+  </div>
+
+
+  <script>
+    $(document).ready(function () {
+    
+     
+      $("#salon").click(function () {
+        $("#11").show();
+        $("#22").hide();
+        $("#33").hide();
+      });
+  
+    });
+  </script>
+
+</body>
+
+</html>
