@@ -137,4 +137,170 @@ footer{
 }
 
 
+.img1-wrap {
+    display: block;
+    position: relative;
+    margin-bottom: 50px;
+}
 
+
+
+
+
+.overlay {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+ 
+    overflow: hidden;
+
+}
+
+.img1-wrap:hover .overlay {
+    height: 100%;
+}
+
+.img1-wrap:hover img {
+    opacity: 0.3;
+}
+
+.text {
+    white-space: nowrap; 
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    font-size: 16px;
+    padding: 16px 32px;
+    background-color: black;
+}
+
+
+
+
+
+.content{
+    padding-top: 100px;
+}
+
+
+.carousel-control.left {
+    margin-left: -500px;
+  }
+  
+  .carousel-control.right {
+    margin-right: -25px;
+  }
+
+
+
+  
+
+  
+.seatSelection {
+    text-align: center;
+    padding: 5px;
+      margin: 15px;}
+  
+  .seatsReceipt {text-align: center;}
+  
+  .seatNumber {
+      display: inline;
+      padding: 10px;
+      background-color: #5c86eb;
+      color: #FFF;
+      border-radius: 5px;
+      cursor: default;
+      height: 25px;
+      width: 25px;
+      line-height: 25px;
+      text-align: center;
+   }
+  
+  .seatRow {padding: 10px;}
+  
+  .seatSelected {
+      background-color: lightgreen;
+      color: black;
+   }
+  
+  .seatUnavailable {background-color: gray;}
+  
+  .seatRowNumber {
+      clear: none;
+      display: inline;
+   }
+  
+  .hidden {display: none;}
+  
+  .seatsAmount {max-width: 2em;}
+  
+
+  .qty .count {
+    color: #000;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 30px;
+    padding: 0 2px
+    ;min-width: 35px;
+    text-align: center;
+}
+.qty .plus {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 30px;
+    height: 30px;
+    font: 30px/1 Arial,sans-serif;
+    text-align: center;
+    border-radius: 50%;
+    }
+.qty .minus {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 30px;
+    height: 30px;
+    font: 30px/1 Arial,sans-serif;
+    text-align: center;
+    border-radius: 50%;
+    background-clip: padding-box;
+}
+div {
+    text-align: center;
+}
+.minus:hover{
+    background-color: #717fe0 !important;
+}
+.plus:hover{
+    background-color: #717fe0 !important;
+}
+/*Prevent text selection*/
+span{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+input{  
+    border: 0;
+    width: 2%;
+}
+nput::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input:disabled{
+    background-color:white;
+}
+         

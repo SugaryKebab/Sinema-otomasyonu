@@ -35,28 +35,65 @@
       <div class="sidebar-heading">Sinema Panel </div>
       <div class="list-group list-group-flush">
         <a href="#" id="salon"  class="list-group-item list-group-item-action bg-light">Salonları Yönet</a>
-        <a  href="#"id="film" class="list-group-item list-group-item-action bg-light">Filmleri Yönet</a>
+        <a  href="#" id="film" class="list-group-item list-group-item-action bg-light">Filmleri Yönet</a>
         <a href="#" id="seans" class="list-group-item list-group-item-action bg-light">Seansları Yönet</a>
         <a href="#" id="kampanya" class="list-group-item list-group-item-action bg-light">Anasayfa Kampanyalar</a>
-        <a  href="#"id="biletler" class="list-group-item list-group-item-action bg-light">Biletler</a>
+        <a  href="#" id="biletler" class="list-group-item list-group-item-action bg-light">Biletler</a>
+        <a  href="#" id="uye" class="list-group-item list-group-item-action bg-light">Üyeler</a>
+        <a  href="#" id="uye" class="list-group-item list-group-item-action bg-light">Rapor</a>
       </div>
     </div>
 
 
     <div id="page-content-wrapper">
-      <div class="container">
+      <div id="11" class="container">
 
      <div class="salonlar" style="margin-top: 50px;">
        <h2>Salonları Düzenle</h2>
-       <button type="button" class="btn btn-primary float-right">Yeni Salon Ekle</button>
+       <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#salonekle">Yeni Salon Ekle</button>
       <table class="table" style="margin-top: 50px;">
   
         <thead>
           <tr>
             <th scope="col">Salon adı</th>
-            <th scope="col">Sıra Sayısı </th>
-            <th scope="col">Toplam Koltuk Sayısı</th>
+            <th scope="col">Sıra Harfi </th>
+            <th scope="col">Sıra Koltuk Sayısı </th>
+        
             <th scope="col">İşlemler</th>
+           
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Salon 1</td>
+            <td>Salon A</td>
+            <td>5 </td>
+           
+			<td>  <button type="button" class="btn btn-warning">Güncelle</button> <button type="button" class="btn btn-danger">Sil</button></td>
+          </tr>
+          <tr>
+
+        </tbody>
+      </table>
+
+     </div>
+	 </div>
+	 
+	 <div id="22" class="container">
+
+     <div class="filmler" style="margin-top: 50px;">
+       <h2>Filmleri Düzenle</h2>
+       <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#filmekle">Yeni Film Ekle</button>
+      <table class="table" style="margin-top: 50px;">
+  
+        <thead>
+          <tr>
+            <th scope="col">Film adı</th>
+            <th scope="col">Kategori </th>
+            <th scope="col">Süre</th>
+            <th scope="col">Vizyon tarihi</th>
+			<th scope="col">Özet</th>
+			<th scope="col">İşlemler</th>
            
           </tr>
         </thead>
@@ -65,17 +102,74 @@
             <td>Salon 1</td>
             <td>5 </td>
             <td>30</td>
+			<td>30</td>
+			<td>30</td>
+			<td><button type="button" class="btn btn-danger">Düzenle</button></td>
           </tr>
           <tr>
 
             <td>Jacob</td>
             <td>Thornton</td>
             <td>@fat</td>
+			<td>30</td>
+			<td>30</td>
+			<td><button type="button" class="btn btn-danger">Düzenle</button></td>
           </tr>
           <tr>
             <td>Larry</td>
             <td>the Bird</td>
             <td>@twitter</td>
+			<td>30</td>
+			<td>30</td>
+			<td><button type="button" class="btn btn-danger">Düzenle</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+     </div>
+
+
+
+
+
+
+    </div>
+	
+      <div id="33" class="container">
+
+     <div class="seanslar" style="margin-top: 50px;">
+       <h2>Seansları Düzenle</h2>
+       <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#seansekle">Yeni Seans Ekle</button>
+      <table class="table" style="margin-top: 50px;">
+  
+        <thead>
+          <tr>
+            <th scope="col">Salon adı</th>
+            <th scope="col">Film adı </th>
+            <th scope="col">Saat</th>
+			<th scope="col">İşlemler</th>
+           
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Salon 1</td>
+            <td>5 </td>
+            <td>30</td>
+			<td><button type="button" class="btn btn-danger">Düzenle</button></td>
+          </tr>
+          <tr>
+
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+			<td><button type="button" class="btn btn-danger">Düzenle</button></td>
+          </tr>
+          <tr>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+			<td><button type="button" class="btn btn-danger">Düzenle</button></td>
           </tr>
         </tbody>
       </table>
@@ -91,16 +185,160 @@
   </div>
 
   </div>
+  
+  <div id="salonekle" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+	  
+	    <div class="form-group">
+        <label for="formGroupExampleInput">Salon adı: </label>
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Salon adı giriniz">
+        
+		
+        <label for="formGroupExampleInput2">Sıra sayısı : </label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Sıra sayısı giriniz">
+        
+        
+        <label for="formGroupExampleInput2">Koltuk sayısı: </label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Koltuk sayısı giriniz">
+        </div>
+       </form>
+	  
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Gönder</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="filmekle" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+	  
+	    <div class="form-group">
+
+     
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFile">
+            <label class="custom-file-label" for="customFile">Choose file</label>
+          </div>
+   
+
+        <label for="formGroupExampleInput">Film adı: </label>
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Film adı giriniz">
+		
+        <label for="formGroupExampleInput2">Kategori : </label>
+        <select class="form-control" id="formGroupExampleInput2">
+        <option>Aksiyon</option>
+        <option>Komedi</option>
+        <option>Korku</option>
+        <option>Bilim kurgu</option>
+		<option>Dram</option>
+		<option>Animasyon</option>
+      </select>
+		
+		<label for="formGroupExampleInput2">Süre: </label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Süre giriniz">
+        
+        
+        <label for="formGroupExampleInput2">Vizyon tarihi: </label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Vizyon tarihi giriniz">
+		
+		<label for="formGroupExampleInput2">Özet: </label>
+        <textarea class="form-control" rows="5" id="formGroupExampleInput2"></textarea>
+        </div>
+       </form>
+	  
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Gönder</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="seansekle" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+	  
+	    <div class="form-group">
+        <label for="formGroupExampleInput">Salon adı: </label>
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Salon adı giriniz">
+        
+		
+        <label for="formGroupExampleInput2">Film adı : </label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Film adı giriniz">
+        
+        
+        <label for="formGroupExampleInput2">Saat: </label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Saat giriniz">
+        </div>
+       </form>
+	  
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Gönder</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<script>
+  // Add the following code if you want the name of the file appear on select
+  $(".custom-file-input").on("change", function() {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+  </script>
+  
 
   <script>
     $(document).ready(function () {
     
+	    $("#11").hide();
+        $("#22").hide();
+        $("#33").hide();
      
       $("#salon").click(function () {
         $("#11").show();
         $("#22").hide();
         $("#33").hide();
+      });
+	  
+	  $("#film").click(function () {
+        $("#22").show();
+        $("#11").hide();
+        $("#33").hide();
+      });
+	  
+	  $("#seans").click(function () {
+        $("#33").show();
+        $("#22").hide();
+        $("#11").hide();
       });
   
     });
