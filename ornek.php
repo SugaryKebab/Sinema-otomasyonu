@@ -49,7 +49,11 @@
         </div>
 
 
+        <div class="icerik">
+            <div class="container" id="tablo">
 
+            </div>
+        </div>
 
 
 
@@ -72,12 +76,12 @@
                     $.ajax({
                         type: "POST",
                         url: "php/slayt/fetch.php",
-                  
+
                         success: function(data) {
-                            alert(data);
+                          $("#tablo").empty().append(data);
 
                         },
-                   
+
                     });
                 });
 
