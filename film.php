@@ -17,45 +17,8 @@
 
 <body>
 
-  <div class="bar">
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
-      <a class="navbar-brand" href="#"> Sinema</a>
-    
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-          <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Ana Sayfa</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Vizyondaki Filmler</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Gelecek Filmler</a>
-          </li>
-          <li class="nav-item ">
-              <a class="nav-link" href="#">İletişim</a>
-            </li>
-        </ul>
-      </div>
-     
-      <div class="dropdown">
-        <button type="button " class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-          <i class="far fa-user"> Kullanıcı</i>
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Link 1</a>
-          <a class="dropdown-item" href="#">Link 2</a>
-          <a class="dropdown-item" href="#">Link 3</a>
-        </div>
-      </div>
 
-  </nav>
-  
-
-  </div>
+  <?php include('header.html'); ?>
 
 
 
@@ -159,19 +122,19 @@
 
   <div class="content">
     <div class="container">
-       <div class="seans" style="margin-bottom: 50px;">
+      <div class="seans" style="margin-bottom: 50px;">
         <h4>A Salonu - 2D</h4>
         <button type="button" class="btn btn-secondary btn-lg">10:30</button>
         <button type="button" class="btn btn-primary btn-lg">12:45</button>
         <button type="button" class="btn btn-primary btn-lg">18:00</button>
-       </div>
+      </div>
 
-       <div class="seans">
+      <div class="seans">
         <h4>B Salonu - 3D</h4>
         <button type="button" class="btn btn-secondary btn-lg">08:30</button>
         <button type="button" class="btn btn-primary btn-lg">16:45</button>
         <button type="button" class="btn btn-primary btn-lg">19:00</button>
-       </div>
+      </div>
     </div>
 
 
@@ -179,7 +142,7 @@
 
 
   <script>
-    $('#carousel-example').on('slide.bs.carousel', function (e) {
+    $('#carousel-example').on('slide.bs.carousel', function(e) {
       /*
         CC 2.0 License Iatek LLC 2018 - Attribution required
       */
@@ -194,8 +157,7 @@
           // append slides to end
           if (e.direction == "left") {
             $(' .filmler .carousel-item').eq(i).appendTo('.filmler .carousel-inner');
-          }
-          else {
+          } else {
             $('.filmler .carousel-item').eq(0).appendTo('.filmler .carousel-inner');
           }
         }
