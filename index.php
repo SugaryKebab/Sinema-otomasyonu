@@ -104,18 +104,30 @@
               </div>
             </div>
           </div>
+
           <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
-            <img src="images/film/parazit.jpg" class="img-fluid mx-auto d-block" alt="img5">
+
+            <div class="img1-wrap">
+              <img src="images/film/sonsuzluk.png" alt="Avatar" class="image">
+              <div class="overlay">
+                <div class="text"><a href="#"> Bilet Al</a></div>
+              </div>
+            </div>
           </div>
+
           <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
-            <img src="images/film/parazit.jpg" class="img-fluid mx-auto d-block" alt="img6">
+
+            <div class="img1-wrap">
+              <img src="images/film/viking.png" alt="Avatar" class="image">
+              <div class="overlay">
+                <div class="text"><a href="#"> Bilet Al</a></div>
+              </div>
+            </div>
           </div>
-          <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
-            <img src="images/film/parazit.jpg" class="img-fluid mx-auto d-block" alt="img7">
-          </div>
-          <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
-            <img src="images/film/parazit.jpg" class="img-fluid mx-auto d-block" alt="img8">
-          </div>
+
+       
+         
+       
         </div>
         <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>

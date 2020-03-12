@@ -10,7 +10,14 @@
   <meta charset="utf-8">
 
 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="style/panel.css">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+
+  <!--
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="style/style.css">
   <link rel="stylesheet" href="style/panel.css">
@@ -19,11 +26,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE = edge,chrome = 1">
   <title>Hello World using Backbone.js</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" rel="stylesheet" />
+  -->
+  <!--
   <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.13/js/dataTables.bootstrap4.min.js"></script>
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 
 
 </head>
@@ -35,94 +53,42 @@
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
       <div class="sidebar-heading">Sinema Panel </div>
-      <div class="list-group list-group-flush">
-        <a href="#" id="salon" class="list-group-item list-group-item-action bg-light">Salonları Yönet</a>
-        <a href="#" id="film" class="list-group-item list-group-item-action bg-light">Filmleri Yönet</a>
-        <a href="#" id="seans" class="list-group-item list-group-item-action bg-light">Seansları Yönet</a>
-        <a href="#" id="anasayfa" class="list-group-item list-group-item-action bg-light">Anasayfa Kampanyalar</a>
-        <a href="#" id="biletler" class="list-group-item list-group-item-action bg-light">Biletler</a>
-        <a href="#" id="uye" class="list-group-item list-group-item-action bg-light">Üyeler</a>
-        <a href="#" id="uye" class="list-group-item list-group-item-action bg-light">Rapor</a>
-      </div>
-    </div>
+      <div id="accordion">
+        <div class="list-group list-group-flush">
+          <a href="#" id="salon" class="list-group-item list-group-item-action bg-light">Salonları Yönet</a>
+          <a data-target="#filmliste" id="" data-parent="#accordion" data-toggle="collapse" class="list-group-item list-group-item-action bg-light">Filmler</a>
+          <div class="collapse" id="filmliste">
+
+            <div class="list-group">
+              <a href="#" id="film" class="list-group-item list-group-item-action bg-light">Filmleri Yönet</a>
+              <a href="#" class="list-group-item list-group-item-action bg-light">Yönetmetleri Yönet</a>
+              <a href="#" id="filmkategori" class="list-group-item list-group-item-action bg-light">Kategorileri Yönet</a>
+            </div>
 
 
-    <div class="container">
-        <h1>Bootstrap 4 DataTables</h1>
-        <table id="example" class="table table-hover" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
-                </tr>
-            </thead>
-            <tfoot>
-                <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
-                </tr>
-            </tfoot>
-            <tbody>
-                <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011/04/25</td>
-                    <td>$320,800</td>
-                </tr>
-                <tr>
-                    <td>Garrett Winters</td>
-                    <td>Accountant</td>
-                    <td>Tokyo</td>
-                    <td>63</td>
-                    <td>2011/07/25</td>
-                    <td>$170,750</td>
-                </tr>
-                <tr>
-                    <td>Ashton Cox</td>
-                    <td>Junior Technical Author</td>
-                    <td>San Francisco</td>
-                    <td>66</td>
-                    <td>2009/01/12</td>
-                    <td>$86,000</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-
-    <div class="icerik">
-      <div class="container" id="tablo">
-
-
-
-
-
-
+          </div>
+          <a href="#" id="seans" class="list-group-item list-group-item-action bg-light">Seansları Yönet</a>
+          <a href="#" id="anasayfa" class="list-group-item list-group-item-action bg-light">Anasayfa Kampanyalar</a>
+          <a href="#" id="biletler" class="list-group-item list-group-item-action bg-light">Biletler</a>
+          <a href="#" id="uye" class="list-group-item list-group-item-action bg-light">Üyeler</a>
+          <a href="#" id="uye" class="list-group-item list-group-item-action bg-light">Rapor</a>
+          <a href="#" id="kategori" class="list-group-item list-group-item-action bg-light">Kategori</a>
+        </div>
 
       </div>
+
+
     </div>
 
 
 
-    <script type="text/javascript">
-      $(document).ready(function() {
-        $('#example').DataTable({
-          "language": {
-            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
-          }
-        });
-      });
-    </script>
+    <div class="icerik" id="tablo">
+
+    </div>
+
+
+
+
     <script>
       $(document).ready(function() {
 
@@ -141,6 +107,30 @@
         });
 
 
+
+        $("#filmkategori").click(function() {
+
+          $.ajax({
+            type: "POST",
+            url: "php/film/kategorifetch.php",
+            data: { islem: '1' },
+            success: function(data) {
+              $("#tablo").empty().append(data);
+              $('#example').DataTable({
+                "language": {
+                  "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+              });
+
+
+            },
+
+          });
+        });
+
+
+
+
         $("#film").click(function() {
 
           $.ajax({
@@ -154,20 +144,28 @@
                   "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
                 }
               });
-              
-              $("#example").DataTable().ajax.reload(null, false );
+
+
             },
 
           });
         });
 
       });
+
+      
     </script>
 
+  
 
   </div>
 
+<script>
 
+
+
+  
+</script>
 
 
 

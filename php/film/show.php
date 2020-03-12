@@ -5,27 +5,31 @@ $statement = $conn->query("select * from film inner join kategori on kategori.id
 
 
 
-echo('  <div class="container">
+echo ('  <div class="container">
 
 <table id="example" class="table table-hover" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th>
+            <th>Film Adı</th>
+            <th>Kategori</th>
+            <th>Süre</th>
+            <th>Vizyon Tarihi</th>
+            <th>Özet</th>
+            <th>Yönetmen</th>
+            <th>Kapak Resmi</th>
+            <th>İşlemler</th>
         </tr>
     </thead>
     <tfoot>
         <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th>
+        <th>Film Adı</th>
+        <th>Kategori</th>
+        <th>Süre</th>
+        <th>Vizyon Tarihi</th>
+        <th>Özet</th>
+        <th>Yönetmen</th>
+        <th>Kapak Resmi</th>
+        <th>İşlemler</th>
         </tr>
     </tfoot>
     <tbody>
@@ -36,22 +40,28 @@ echo('  <div class="container">
             <td>61</td>
             <td>2011/04/25</td>
             <td>$320,800</td>
+            <td>$320,800</td>
+            <td>$320,800</td>
         </tr>
         <tr>
-            <td>Garrett Winters</td>
-            <td>Accountant</td>
-            <td>Tokyo</td>
-            <td>63</td>
-            <td>2011/07/25</td>
-            <td>$170,750</td>
+        <td>Tiger Nixon</td>
+        <td>System Architect</td>
+        <td>Edinburgh</td>
+        <td>61</td>
+        <td>2011/04/25</td>
+        <td>$320,800</td>
+        <td>$320,800</td>
+        <td>$320,800</td>
         </tr>
         <tr>
-            <td>Ashton Cox</td>
-            <td>Junior Technical Author</td>
-            <td>San Francisco</td>
-            <td>66</td>
-            <td>2009/01/12</td>
-            <td>$86,000</td>
+        <td>Tiger Nixon</td>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>$320,800</td>
+            <td>$320,800</td>
         </tr>
     </tbody>
 </table>
@@ -59,7 +69,7 @@ echo('  <div class="container">
 ');
 
 
-echo('       <h2>Filmleri Düzenle</h2>
+echo ('       <h2>Filmleri Düzenle</h2>
 <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#filmekle">Yeni Film Ekle</button>
 <table id="example" class="table table-hover" cellspacing="0" width="100%">
 
@@ -79,19 +89,14 @@ echo('       <h2>Filmleri Düzenle</h2>
 
 
 while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-echo('     <tr class="class="d-flex">
-<td> '.$row['ad'].' </td>
-<td> '.$row['kategori'].' </td>
-<td> '.$row['sure'].' </td>
-<td> '.$row['vizyontarihi'].' </td>
-<td '.$row['ozet'].' </td>
+    echo ('     <tr class="class="d-flex">
+<td> ' . $row['ad'] . ' </td>
+<td> ' . $row['kategori'] . ' </td>
+<td> ' . $row['sure'] . ' </td>
+<td> ' . $row['vizyontarihi'] . ' </td>
+<td ' . $row['ozet'] . ' </td>
 <td><button type="button" class="btn btn-danger">Düzenle</button></td>
 </tr>
 <tr>');
-
-
-
-
-
 }
-echo('</table>');
+echo ('</table>');
