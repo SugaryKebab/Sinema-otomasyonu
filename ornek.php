@@ -39,6 +39,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+  <script src="https://kit.fontawesome.com/de1126d062.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
@@ -56,11 +57,11 @@
       <div id="accordion">
         <div class="list-group list-group-flush">
           <a href="#" id="salon" class="list-group-item list-group-item-action bg-light">Salonları Yönet</a>
-          <a data-target="#filmliste" id="" data-parent="#accordion" data-toggle="collapse" class="list-group-item list-group-item-action bg-light">Filmler</a>
+          <a data-target="#filmliste" id="" data-parent="#accordion" data-toggle="collapse" class="list-group-item list-group-item-action bg-light">Filmler <i class="fas fa-angle-right"></i></a>
           <div class="collapse" id="filmliste">
 
             <div class="list-group">
-              <a href="#" id="film" class="list-group-item list-group-item-action bg-light">Filmleri Yönet</a>
+              <a href="#" id="film" class="list-group-item list-group-item-action bg-light">Filmleri Yönet </i></a>
               <a href="#" class="list-group-item list-group-item-action bg-light">Yönetmetleri Yönet</a>
               <a href="#" id="filmkategori" class="list-group-item list-group-item-action bg-light">Kategorileri Yönet</a>
             </div>

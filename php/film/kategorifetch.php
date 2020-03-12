@@ -46,7 +46,7 @@ function yazdir($conn)
 
     $statement = $conn->query("select * from kategori");
 
-    echo ('<div> <h2>Filmleri Düzenle</h2>
+    echo ('<div> <h2>Kategorileri Düzenle</h2>
    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#insertkategori">Kategori Ekle</button></div> ');
 
     echo (' 
