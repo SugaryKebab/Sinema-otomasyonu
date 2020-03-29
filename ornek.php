@@ -100,7 +100,7 @@
             url: "php/slayt/fetch.php",
 
             success: function(data) {
-              $("#tablo").empty().append(data);
+              $("#tablo").remove().append(data);
 
             },
 
@@ -114,7 +114,9 @@
           $.ajax({
             type: "POST",
             url: "php/film/kategorifetch.php",
-            data: { islem: '1' },
+            data: {
+              islem: '1'
+            },
             success: function(data) {
               $("#tablo").empty().append(data);
               $('#example').DataTable({
@@ -153,20 +155,112 @@
         });
 
       });
-
-      
     </script>
 
-  
 
+
+
+    <script>
+      $(document).on('click', '#deletekategori', function() {
+        var deger = $(this).val();
+        alert(deger);
+        $.ajax({
+          type: 'POST',
+          url: 'php/film/kategorifetch.php',
+          data: {
+            islem: 2,
+            id: deger
+          },
+          success: function(data) {
+            $('#tablo').empty().append(data);
+            $('#example').DataTable({
+              'language': {
+                'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+              }
+            });
+
+
+          },
+
+        });
+
+      });
+
+
+      $(document).on('click', '#kategoriupdate', function() {
+       
+   
+        var deger = $(this).closest("tr").find(".sorting_1").text();
+        $('#kategorideger').val(deger);
+         $('#updatekategoriid').val("id",$('#kategoriupdate').val());
+    
+
+      });
+
+
+      $(document).on('click', '#kategoriinsert', function() {
+        var ad = $('#addeger').val();
+
+
+
+        $.ajax({
+          type: 'POST',
+          url: 'php/film/kategorifetch.php',
+          data: {
+            islem: 3,
+            ad: ad
+          },
+          success: function(data) {
+            $('#tablo').empty().append(data);
+            $('#example').DataTable({
+              'language': {
+                'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+              }
+            });
+
+
+          },
+
+        });
+
+      });
+
+      $(document).on('click', '.kategoriupdate', function() {
+        var ad = $('#updatekategorideger').val();
+        var id = $('#updatekategoriid').val();
+        console.log(id);
+
+        $.ajax({
+          type: 'POST',
+          url: 'php/film/kategorifetch.php',
+          data: {
+            islem: 4,
+            ad: ad,
+            id: id
+          },
+          success: function(data) {
+            $('#tablo').empty().append(data);
+            $('#example').DataTable({
+              'language': {
+                'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+              }
+            });
+
+
+          },
+
+        });
+
+      });
+    </script>
   </div>
 
-<script>
+  <script>
 
 
 
-  
-</script>
+
+  </script>
 
 
 

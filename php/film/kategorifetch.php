@@ -34,6 +34,28 @@ if ($islem == 1) {
 
 
     
+}else if ($islem == 4){
+  $ad = $_POST['ad'];
+  $id = $_POST['id'];
+  try {
+    require_once("../baglanti.php");
+    $sql = "UPDATE kategori SET kategori='$ad' WHERE id=$id";
+
+    $stmt = $conn->prepare($sql);
+
+    
+    $stmt->execute();
+
+    echo $stmt->rowCount() . " records UPDATED successfully";
+    }
+catch(PDOException $e)
+    {
+    echo $sql . "<br>" . $e->getMessage();
+    }
+    yazdir($conn);
+
+
+
 }
 
 
@@ -81,70 +103,17 @@ function yazdir($conn)
     
     
     <td>' . $row['kategori'] . '</td>
-    <td><a  type="button" value="' . $row['id'] . '" class="btn btn-warning update">Güncelle</a>
-     <button type="button" id="delete" value="' . $row['id'] . '" class="btn btn-danger delete">Sil</button> </td>
+    <td><button  type="button" id="kategoriupdate"  data-toggle="modal" data-target="#updatekategori" value="' . $row['id'] . '" class="btn btn-warning update">Güncelle</button>
+     <button type="button" id="deletekategori" value="' . $row['id'] . '" class="btn btn-danger delete">Sil</buttonbutton> </td>
     </tr>
     ');
     }
 
 
-    echo ('    </tbody>
+    echo ('</tbody>
 </table>
 </div>');
 
-
-    echo ("  <script>
-
-$(document).one('click','.delete',function (){
-   var deger = $(this).val();
-  
-  $.ajax({
-    type: 'POST',
-    url: 'php/film/kategorifetch.php',
-    data: { islem: 2, id: deger },
-    success: function(data) {
-        $('#tablo').empty().append(data);
-        $('#example').DataTable({
-          'language': {
-            'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
-          }
-        });
-
-
-    },
-
-  });
-
-});
-
-
-$(document).one('click','.insert',function (){
-    var ad = $('#addeger').val();
-
-
-   $.ajax({
-     type: 'POST',
-     url: 'php/film/kategorifetch.php',
-     data: { islem: 3, ad: ad },
-     success: function(data) {
-         $('#tablo').empty().append(data);
-         $('#example').DataTable({
-           'language': {
-             'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
-           }
-         });
- 
- 
-     },
- 
-   });
- 
- });
- 
-
-
-</script>
-");
 
 modal();
 
@@ -162,7 +131,7 @@ function modal()
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-    </div>
+    </div>	The Dark Tower: The Gunslinger
     <div class="modal-body">
       <form>
         <div class="form-group">
@@ -172,7 +141,7 @@ function modal()
         </div>
       
     
-        <button type="submit" data-dismiss="modal" class="btn btn-primary insert">Ekle</button>
+        <button type="submit" id="kategoriinsert" data-dismiss="modal" class="btn btn-primary insert">Ekle</button>
       </form>
     </div>
 
@@ -194,12 +163,12 @@ function modal()
        <form>
          <div class="form-group">
            <label for="updatekategori">Kategori</label>
-           <input type="text" class="form-control" id="updatekategori" aria-describedby="emailHelp" placeholder="Kategori İsmi Giriniz">
-
+           <input type="text" class="form-control" id="updatekategorideger" aria-describedby="emailHelp" placeholder="Kategori İsmi Giriniz">
+           <input type="hidden" class="form-control" id="updatekategoriid" aria-describedby="emailHelp" placeholder="Kategori İsmi Giriniz">
          </div>
        
      
-         <button type="submit" class="btn btn-primary update">Ekle</button>
+         <button type="submit" data-dismiss="modal" class="btn btn-primary kategoriupdate">Güncelle</button>
        </form>
      </div>
  
