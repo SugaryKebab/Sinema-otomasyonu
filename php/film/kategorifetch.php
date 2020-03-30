@@ -123,7 +123,7 @@ modal();
 
 function modal()
 {
-    echo ('<div class="modal fade" id="insertkategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    echo ('<div class="modal " id="insertkategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
   <div class="modal-content">
     <div class="modal-header">
@@ -131,7 +131,7 @@ function modal()
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-    </div>	The Dark Tower: The Gunslinger
+    </div>
     <div class="modal-body">
       <form>
         <div class="form-group">
@@ -150,7 +150,7 @@ function modal()
 </div>');
 
 
- echo('  <div class="modal fade" id="updatekategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ echo('  <div class="modal" id="updatekategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
  <div class="modal-dialog" role="document">
    <div class="modal-content">
      <div class="modal-header">
@@ -168,7 +168,7 @@ function modal()
          </div>
        
      
-         <button type="submit" data-dismiss="modal" class="btn btn-primary kategoriupdate">Güncelle</button>
+         <button type="submit " data-backdrop="false" data-dismiss="modal" class="btn btn-primary kategoriupdate">Güncelle</button>
        </form>
      </div>
  
