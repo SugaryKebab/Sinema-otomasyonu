@@ -56,72 +56,135 @@
       <div class="sidebar-heading">Sinema Panel </div>
       <div id="accordion">
         <div class="list-group list-group-flush">
-          <a href="#" id="salon" class="list-group-item list-group-item-action bg-light">Salonları Yönet</a>
-          <a data-target="#filmliste" id="" data-parent="#accordion" data-toggle="collapse" class="list-group-item list-group-item-action bg-light">Filmler <i class="fas fa-angle-right"></i></a>
-          <div class="collapse" id="filmliste">
-
+          <a href="#" data-target="#salonliste" id="" data-parent="#accordion" data-toggle="collapse"class="list-group-item list-group-item-action bg-light">Salonlar<i class="fas fa-angle-right"></i></a>
+          <div class="collapse" id="salonliste">
+          <i class="fas fa-angle-right"></i>
             <div class="list-group">
-              <a href="#" id="film" class="list-group-item list-group-item-action bg-light">Filmleri Yönet </i></a>
-              <a href="#" class="list-group-item list-group-item-action bg-light">Yönetmetleri Yönet</a>
-              <a href="#" id="filmkategori" class="list-group-item list-group-item-action bg-light">Kategorileri Yönet</a>
+              <a href="#" id="salon" class="list-group-item list-group-item-action bg-light">Salonları Yönet</i></a>
+              <a href="#" id="salonkoltuk" class="list-group-item list-group-item-action bg-light">Salon Koltuklarını Yönet</a>
+
             </div>
 
-
           </div>
-          <a href="#" id="seans" class="list-group-item list-group-item-action bg-light">Seansları Yönet</a>
-          <a href="#" id="anasayfa" class="list-group-item list-group-item-action bg-light">Anasayfa Kampanyalar</a>
-          <a href="#" id="biletler" class="list-group-item list-group-item-action bg-light">Biletler</a>
-          <a href="#" id="uye" class="list-group-item list-group-item-action bg-light">Üyeler</a>
-          <a href="#" id="uye" class="list-group-item list-group-item-action bg-light">Rapor</a>
-          <a href="#" id="kategori" class="list-group-item list-group-item-action bg-light">Kategori</a>
+            <a data-target="#filmliste" id="" data-parent="#accordion" data-toggle="collapse" class="list-group-item list-group-item-action bg-light">Filmler <i class="fas fa-angle-right"></i></a>
+            <div class="collapse" id="filmliste">
+
+              <div class="list-group">
+                <a href="#" id="film" class="list-group-item list-group-item-action bg-light">Filmleri Yönet </i></a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Yönetmetleri Yönet</a>
+                <a href="#" id="filmkategori" class="list-group-item list-group-item-action bg-light">Kategorileri Yönet</a>
+              </div>
+
+
+            </div>
+            <a href="#" id="seans" class="list-group-item list-group-item-action bg-light">Seansları Yönet</a>
+            <a href="#" id="anasayfa" class="list-group-item list-group-item-action bg-light">Anasayfa Kampanyalar</a>
+            <a href="#" id="biletler" class="list-group-item list-group-item-action bg-light">Biletler</a>
+            <a href="#" id="uye" class="list-group-item list-group-item-action bg-light">Üyeler</a>
+            <a href="#" id="uye" class="list-group-item list-group-item-action bg-light">Rapor</a>
+            <a href="#" id="kategori" class="list-group-item list-group-item-action bg-light">Kategori</a>
+          </div>
+
         </div>
+
 
       </div>
 
 
-    </div>
 
+      <div class="icerik" id="tablo">
 
-
-    <div class="icerik" id="tablo">
-
-    </div>
+      </div>
 
 
 
 
-    <script>
-      $(document).ready(function() {
+      <script>
+        $(document).ready(function() {
 
-        $("#anasayfa").click(function() {
+          $("#anasayfa").click(function() {
 
-          $.ajax({
-            type: "POST",
-            url: "php/slayt/fetch.php",
+            $.ajax({
+              type: "POST",
+              url: "php/slayt/fetch.php",
 
-            success: function(data) {
-              $("#tablo").remove().append(data);
+              success: function(data) {
+                $("#tablo").remove().append(data);
 
-            },
+              },
 
+            });
           });
+
+
+
+          $("#filmkategori").click(function() {
+
+            $.ajax({
+              type: "POST",
+              url: "php/film/kategorifetch.php",
+              data: {
+                islem: '1'
+              },
+              success: function(data) {
+                $("#tablo").empty().append(data);
+                $('#example').DataTable({
+                  "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                  }
+                });
+
+
+              },
+
+            });
+          });
+
+
+
+
+          $("#film").click(function() {
+
+            $.ajax({
+              type: "POST",
+              url: "php/film/show.php",
+
+              success: function(data) {
+                $("#tablo").empty().append(data);
+                $('#example').DataTable({
+                  "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                  }
+                });
+
+
+              },
+
+            });
+          });
+
         });
+      </script>
 
 
 
-        $("#filmkategori").click(function() {
 
+      <script>
+        $(document).on('click', '#deletekategori', function() {
+          var deger = $(this).val();
+          alert(deger);
           $.ajax({
-            type: "POST",
-            url: "php/film/kategorifetch.php",
+            type: 'POST',
+            url: 'php/film/kategorifetch.php',
             data: {
-              islem: '1'
+              islem: 2,
+              id: deger
             },
             success: function(data) {
-              $("#tablo").empty().append(data);
+              $('#tablo').empty().append(data);
               $('#example').DataTable({
-                "language": {
-                  "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                'language': {
+                  'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
                 }
               });
 
@@ -129,22 +192,38 @@
             },
 
           });
+
         });
 
 
+        $(document).on('click', '#kategoriupdate', function() {
 
 
-        $("#film").click(function() {
+          var deger = $(this).closest("tr").find(".sorting_1").text();
+          $('#kategorideger').val(deger);
+          $('#updatekategoriid').val("id", $('#kategoriupdate').val());
+
+
+        });
+
+
+        $(document).on('click', '#kategoriinsert', function() {
+          var ad = $('#addeger').val();
+
+
 
           $.ajax({
-            type: "POST",
-            url: "php/film/show.php",
-
+            type: 'POST',
+            url: 'php/film/kategorifetch.php',
+            data: {
+              islem: 3,
+              ad: ad
+            },
             success: function(data) {
-              $("#tablo").empty().append(data);
+              $('#tablo').empty().append(data);
               $('#example').DataTable({
-                "language": {
-                  "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                'language': {
+                  'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
                 }
               });
 
@@ -152,115 +231,45 @@
             },
 
           });
+
         });
 
-      });
-    </script>
+        $(document).on('click', '.kategoriupdate', function() {
+          var ad = $('#updatekategorideger').val();
+          var id = $('#updatekategoriid').val();
+          console.log(id);
+
+          $.ajax({
+            type: 'POST',
+            url: 'php/film/kategorifetch.php',
+            data: {
+              islem: 4,
+              ad: ad,
+              id: id
+            },
+            success: function(data) {
+              $('#tablo').empty().append(data);
+              $('#example').DataTable({
+                'language': {
+                  'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+                }
+              });
 
 
+            },
 
+          });
+
+        });
+      </script>
+    </div>
 
     <script>
-      $(document).on('click', '#deletekategori', function() {
-        var deger = $(this).val();
-        alert(deger);
-        $.ajax({
-          type: 'POST',
-          url: 'php/film/kategorifetch.php',
-          data: {
-            islem: 2,
-            id: deger
-          },
-          success: function(data) {
-            $('#tablo').empty().append(data);
-            $('#example').DataTable({
-              'language': {
-                'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
-              }
-            });
-
-
-          },
-
-        });
-
-      });
-
-
-      $(document).on('click', '#kategoriupdate', function() {
-       
-   
-        var deger = $(this).closest("tr").find(".sorting_1").text();
-        $('#kategorideger').val(deger);
-         $('#updatekategoriid').val("id",$('#kategoriupdate').val());
-    
-
-      });
-
-
-      $(document).on('click', '#kategoriinsert', function() {
-        var ad = $('#addeger').val();
 
 
 
-        $.ajax({
-          type: 'POST',
-          url: 'php/film/kategorifetch.php',
-          data: {
-            islem: 3,
-            ad: ad
-          },
-          success: function(data) {
-            $('#tablo').empty().append(data);
-            $('#example').DataTable({
-              'language': {
-                'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
-              }
-            });
 
-
-          },
-
-        });
-
-      });
-
-      $(document).on('click', '.kategoriupdate', function() {
-        var ad = $('#updatekategorideger').val();
-        var id = $('#updatekategoriid').val();
-        console.log(id);
-
-        $.ajax({
-          type: 'POST',
-          url: 'php/film/kategorifetch.php',
-          data: {
-            islem: 4,
-            ad: ad,
-            id: id
-          },
-          success: function(data) {
-            $('#tablo').empty().append(data);
-            $('#example').DataTable({
-              'language': {
-                'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
-              }
-            });
-
-
-          },
-
-        });
-
-      });
     </script>
-  </div>
-
-  <script>
-
-
-
-
-  </script>
 
 
 
