@@ -25,7 +25,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-  
+
   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 
@@ -38,7 +38,8 @@
   <!-- (Optional) Latest compiled and minified JavaScript translation files -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>
 
-
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
 
   <!--
     
@@ -113,7 +114,7 @@
           <div class="collapse" id="filmliste">
             <div class="list-group">
               <a href="#" id="film" class="list-group-item list-group-item-action bg-light">Filmleri Yönet </i></a>
-              <a href="#" class="list-group-item list-group-item-action bg-light">Yönetmetleri Yönet</a>
+              <a href="#" id="yonetmenler" class="list-group-item list-group-item-action bg-light">Yönetmetleri Yönet</a>
               <a href="#" id="filmkategori" class="list-group-item list-group-item-action bg-light">Kategorileri Yönet</a>
             </div>
           </div>
@@ -126,22 +127,49 @@
         </div>
       </div>
     </div>
-    <div class="icerik" id="tablo">
 
+
+    <div class="alert alert-success alert-dismissible fade" id="alertsucces" style="  position:fixed; 
+    top: 0px; 
+    left: 240px; 
+    width: 100%;
+    z-index: 9999; 
+    border-radius:0px" role="alert">
+
+      <div id="succes"></div>
+
+      <button type="button" class="close" data-dismiss="alert" style="right: 240px" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade" id="alertdanger" style="  position:fixed; 
+    top: 0px; 
+    left: 240px; 
+    width: 100%;
+    z-index: 9999; 
+    border-radius:0px" role="alert">
+
+      <div id="danger"></div>
+
+      <button type="button" class="close" data-dismiss="alert" style="right: 240px" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="icerik">
+
+
+      <div id="tablo" style="margin-top: 50px; margin-left:50px;">
+
+
+      </div>
 
 
 
     </div>
 
     <script>
-      function success() {
-        $('.alert').removeClass('d-none').addClass('show');
-        $(".alert").delay(2000).slideUp(200, function() {
-          $('.alert').removeClass('d-none').removeClass('show');
-        });
-      }
-
-
       $(document).ready(function() {
 
         $("#anasayfa").click(function() {
@@ -212,14 +240,16 @@
         });
 
         $("#salonkoltuk").click(function() {
-
           $.ajax({
             type: "POST",
             url: "php/salon/koltukfetch.php",
+
             data: {
               islem: '1'
             },
             success: function(data) {
+
+
               $("#tablo").empty().append(data);
               $('#example').DataTable({
                 "language": {
@@ -232,12 +262,39 @@
 
                 alert($(this).find("option:selected").val());
 
+              });
 
 
 
+            },
 
 
 
+          });
+        });
+
+        $("#yonetmenler").click(function() {
+          $.ajax({
+            type: "POST",
+            url: "php/yonetmenler/yonetmenlerfetch.php",
+
+            data: {
+              islem: '1'
+            },
+            success: function(data) {
+
+
+              $("#tablo").empty().append(data);
+              $('#example').DataTable({
+                "language": {
+                  "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+              });
+              $('select').selectpicker();
+
+              $('#select').on('change', function(e) {
+
+                alert($(this).find("option:selected").val());
 
               });
 
@@ -245,9 +302,57 @@
 
             },
 
+
+
           });
         });
 
+
+
+        $("#film").click(function() {
+          $.ajax({
+            type: "POST",
+            url: "php/film/filmfetch.php",
+
+            data: {
+              islem: '1'
+            },
+            success: function(data) {
+
+
+              $("#tablo").empty().append(data);
+              $('#example').DataTable({
+                "language": {
+                  "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+              });
+              $('select').selectpicker();
+
+
+              $('#vizyontarihi').datepicker({
+                format: 'yyyy-mm-dd',
+
+              });
+              $(".custom-file-input").on("change", function() {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+              });
+
+
+              $('#select').on('change', function(e) {
+
+                alert($(this).find("option:selected").val());
+
+              });
+
+
+
+            },
+
+
+
+          });
+        });
 
 
 
@@ -259,6 +364,25 @@
 
 
     <script>
+      function succes($mesaj) {
+        $("#succes").empty().append($mesaj);
+        $("#alertsucces").addClass("show");
+        $("#alertsucces").fadeTo(2000, 500).slideUp(500, function() {
+          $("#alertsuccest").slideUp(500);
+        });
+      }
+
+      function error($mesaj) {
+        $("#danger").empty().append($mesaj);
+        $("#alertdanger").addClass("show");
+        $("#alertdanger").fadeTo(2000, 500).slideUp(500, function() {
+          $("#alertdanger").slideUp(500);
+        });
+      }
+
+
+
+
       $(document).on('click', '#deletekategori', function() {
         var deger = $(this).val();
 
@@ -270,6 +394,19 @@
             id: deger
           },
           success: function(data) {
+            var $response = $(data);
+
+            var hata = $response.filter('#hatakodu').val();
+
+            if (hata == 'silindi') {
+              succes("Veri başarıyla silindi.");
+            } else if (hata == 'guncellenemedi') {
+              error("Veri silinemedi.");
+            }
+
+
+
+
             $('#tablo').empty().append(data);
             $('#example').DataTable({
               'language': {
@@ -288,15 +425,19 @@
       $(document).on('click', '#kategoriupdate', function() {
 
 
-        var deger = $(this).closest("tr").find(".sorting_1").text();
-        $('#kategorideger').val(deger);
-        $('#updatekategoriid').val("id", $('#kategoriupdate').val());
+        var $deger = $(this).closest("tr").find(".kateogriadi").text();
+        $('#updatekategorideger').val($deger);
+        $('#updatekategoriid').val($(this).val());
 
 
       });
 
 
       $(document).on('click', '#kategoriinsert', function() {
+
+
+
+
         var ad = $('#addeger').val();
 
         $('#insertkategori').modal('hide');
@@ -309,6 +450,17 @@
             ad: ad
           },
           success: function(data) {
+
+            var $response = $(data);
+
+            var hata = $response.filter('#hatakodu').val();
+
+            if (hata == 'eklendi') {
+              succes("Veri başarıyla eklendi.");
+            } else if (hata == 'eklenemedi') {
+              error("Veri  eklenemedi.");
+            }
+
             $('#tablo').empty().append(data);
             $('#example').DataTable({
               'language': {
@@ -326,8 +478,7 @@
       $(document).on('click', '.kategoriupdate', function() {
         var ad = $('#updatekategorideger').val();
         var id = $('#updatekategoriid').val();
-        console.log(id);
-
+        alert(id);
         $.ajax({
           type: 'POST',
           url: 'php/film/kategorifetch.php',
@@ -337,6 +488,17 @@
             id: id
           },
           success: function(data) {
+            var $response = $(data);
+
+            var hata = $response.filter('#hatakodu').val();
+
+            if (hata == 'guncellendi') {
+              succes("Veri başarıyla güncellendi.");
+            } else if (hata == 'guncellenemedi') {
+              error("Veri  güncellenemedi.");
+            }
+
+
             $('#tablo').empty().append(data);
             $('#example').DataTable({
               'language': {
@@ -406,7 +568,7 @@
       });
 
       $(document).on('click', '#salonupdate', function() {
-  
+
 
         var deger = $(this).closest("tr").find(".sorting_1").text();
         $('#kategorideger').val(deger);
@@ -419,7 +581,7 @@
       $(document).on('click', '.salonupdate', function() {
         var ad = $('#updatesalondeger').val();
         var id = $('#salonid').val();
- 
+
 
         $.ajax({
           type: 'POST',
@@ -450,18 +612,18 @@
 
       $(document).on('click', '#koltukinsert', function() {
 
-        var $id =  $('#select').find("option:selected").val();
-       var $harf =   $('#selectkoltuk').find("option:selected").val();
-      var $sayi = $('#salonkoltuknumara').val();
+        var $id = $('#select').find("option:selected").val();
+        var $harf = $('#selectkoltuk').find("option:selected").val();
+        var $sayi = $('#salonkoltuknumara').val();
 
-      $.ajax({
+        $.ajax({
           type: 'POST',
           url: 'php/salon/koltukfetch.php',
           data: {
             islem: 3,
             sayi: $sayi,
             id: $id,
-            harf:$harf
+            harf: $harf
           },
           success: function(data) {
             $('#tablo').empty().append(data);
@@ -477,11 +639,199 @@
         });
 
 
-   
+
 
       });
 
 
+      $(document).on('click', '#yonetmeninsert', function() {
+        var ad = $('#yonetmenad').val();
+        var soyad = $('#yonetmensoyad').val();
+
+
+        $.ajax({
+          type: 'POST',
+          url: 'php/yonetmenler/yonetmenlerfetch.php',
+          data: {
+            islem: 3,
+            ad: ad,
+            soyad,
+            soyad
+          },
+          success: function(data) {
+            var $response = $(data);
+
+            var hata = $response.filter('#hatakodu').val();
+
+            if (hata == 'eklendi') {
+              succes("Veri başarıyla eklendi.");
+            } else if (hata == 'eklenemedi') {
+              error("Veri  eklenemedi.");
+            }
+            $('#tablo').empty().append(data);
+            $('#example').DataTable({
+              'language': {
+                'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+              }
+            });
+
+
+          },
+
+        });
+
+      });
+
+
+      $(document).on('click', '#deleteyonetmen', function() {
+        var deger = $(this).val();
+
+        $.ajax({
+          type: 'POST',
+          url: 'php/yonetmenler/yonetmenlerfetch.php',
+          data: {
+            islem: 2,
+            id: deger
+          },
+          success: function(data) {
+            var $response = $(data);
+
+            var hata = $response.filter('#hatakodu').val();
+
+            if (hata == 'silindi') {
+              succes("Veri başarıyla silindi.");
+            } else if (hata == 'guncellenemedi') {
+              error("Veri silinemedi.");
+            }
+
+
+            $('#tablo').empty().append(data);
+            $('#example').DataTable({
+              'language': {
+                'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+              }
+            });
+
+
+          },
+
+        });
+
+      });
+
+
+
+      $(document).on('click', '#updateyonetmen', function() {
+
+
+        var $adi = $(this).closest("tr").find(".adi").text();
+        var $soyadi = $(this).closest("tr").find(".soyadi").text();
+        $('#updateyonetmenad').val($adi);
+        $('#updateyonetmensoyad').val($soyadi);
+        $('#yonetmenlerid').val($(this).val());
+
+
+      });
+
+
+
+      $(document).on('click', '.yonetmenupdate', function() {
+        var ad = $('#updateyonetmenad').val();
+        var soyad = $('#updateyonetmensoyad').val();
+        var id = $('#yonetmenlerid').val();
+        alert(id);
+        $.ajax({
+          type: 'POST',
+          url: 'php/yonetmenler/yonetmenlerfetch.php',
+          data: {
+            islem: 4,
+            ad: ad,
+            soyad: soyad,
+            id: id
+          },
+          success: function(data) {
+            var $response = $(data);
+
+            var hata = $response.filter('#hatakodu').val();
+
+            if (hata == 'guncellendi') {
+              succes("Veri başarıyla güncellendi.");
+            } else if (hata == 'guncellenemedi') {
+              error("Veri  güncellenemedi.");
+            }
+
+
+            $('#tablo').empty().append(data);
+            $('#example').DataTable({
+              'language': {
+                'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+              }
+            });
+
+
+          },
+
+        });
+
+      });
+
+
+      $(document).on('click', '#filminsert', function() {
+        var $filmadi = $('#filminadi').val();
+        var $kategori = $('#kategoriselect').find("option:selected").val();
+        var $yonetmen = $('#yonetmenselect').find("option:selected").val();
+        var $sure = $('#filmsuresi').val();
+        var $ozet = $('#filmozet').val();
+        var $vizyontarihi = $('#vizyontarihi').val();
+
+        var $form_data = new FormData();
+
+
+       
+       $form_data.append('filmadi', $filmadi);
+       $form_data.append('kategori',$kategori);
+       $form_data.append('yonetmen',$yonetmen);
+       $form_data.append('sure',$sure);
+       $form_data.append('ozet',$ozet );
+       $form_data.append('vizyontarihi',$vizyontarihi);
+       $form_data.append('islem','3');
+       $form_data.append("resim", $("#kapakresmi")[0].files[0]);
+
+
+
+
+
+
+
+        $.ajax({
+          type: 'POST',
+          url: 'php/film/filmfetch.php',
+          data: $form_data,
+          processData: false, // tell jQuery not to process the data
+          contentType: false,
+          success: function(data) {
+            var $response = $(data);
+
+            var hata = $response.filter('#hatakodu').val();
+
+            if (hata == 'eklendi') {
+              succes("Veri başarıyla eklendi.");
+            } else if (hata == 'eklenemedi') {
+              error("Veri  eklenemedi.");
+            }
+            $('#tablo').empty().append(data);
+            $('#example').DataTable({
+              'language': {
+                'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+              }
+            });
+
+
+          },
+
+        });
+
+      });
     </script>
   </div>
   <script>

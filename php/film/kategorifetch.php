@@ -16,7 +16,9 @@ if ($islem == 1) {
     try {
         require_once("../baglanti.php");
         $conn->exec('DELETE FROM `kategori` WHERE `kategori`.`id`= ' . $id);
+        mesaj('silindi');
     } catch (PDOException $e) {
+      mesaj('silinemedi');
     }
 
 
@@ -27,13 +29,12 @@ if ($islem == 1) {
         require_once("../baglanti.php");
         $conn->exec('INSERT INTO kategori (kategori)
         VALUES( "' . $ad.'")' );
+          mesaj('eklendi');
     } catch (PDOException $e) {
-        echo($e);
+        mesaj('eklenemedi');
     }
      yazdir($conn);
-
-
-    
+ 
 }else if ($islem == 4){
   $ad = $_POST['ad'];
   $id = $_POST['id'];
@@ -46,11 +47,11 @@ if ($islem == 1) {
     
     $stmt->execute();
 
-    echo $stmt->rowCount() . " records UPDATED successfully";
+    mesaj('guncellendi');
     }
 catch(PDOException $e)
     {
-    echo $sql . "<br>" . $e->getMessage();
+      mesaj('guncellenemedi');
     }
     yazdir($conn);
 
@@ -61,6 +62,10 @@ catch(PDOException $e)
 
 
 
+function mesaj($mesaj){
+  echo('<input type="hidden" id="hatakodu" name="custId" value="'. $mesaj.'">');
+  }
+  
 
 
 function yazdir($conn)
@@ -78,14 +83,14 @@ function yazdir($conn)
 <table id="example" class="table table-hover" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th>Film Adı</th>
+            <th>Kategori Adı</th>
             <th>İşlemler</th>
         </tr>
     </thead>
     <tfoot>
         <tr>
         <th>Film Adı</th>
-        <th>İşlemler</th>
+        <th>Kategori Adı</th>
         </tr>
     </tfoot>
     <tbody>
@@ -102,7 +107,7 @@ function yazdir($conn)
         echo ('    <tr>   
     
     
-    <td>' . $row['kategori'] . '</td>
+    <td class="kateogriadi" >' . $row['kategori'] . '</td>
     <td><button  type="button" id="kategoriupdate"  data-toggle="modal" data-target="#updatekategori" value="' . $row['id'] . '" class="btn btn-warning update">Güncelle</button>
      <button type="button" id="deletekategori" value="' . $row['id'] . '" class="btn btn-danger delete">Sil</buttonbutton> </td>
     </tr>
@@ -154,7 +159,7 @@ function modal()
  <div class="modal-dialog" role="document">
    <div class="modal-content">
      <div class="modal-header">
-       <h5 class="modal-title" id="exampleModalLabel">Kategori Ekle</h5>
+       <h5 class="modal-title" id="exampleModalLabel">Kategori Güncelle</h5>
        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
          <span aria-hidden="true">&times;</span>
        </button>

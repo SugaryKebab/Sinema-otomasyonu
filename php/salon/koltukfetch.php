@@ -3,12 +3,18 @@
 require_once("../baglanti.php");
 
 
+
+
 $islem = $_POST['islem'];
 
 
 if ($islem == 1) {
 
   yazdir($conn);
+
+ 
+
+  
 } else if ($islem == 2) {
   $id = $_POST['id'];
 
@@ -69,7 +75,9 @@ if ($islem == 1) {
 
 
 
-
+function mesaj($mesaj){
+echo('<input type="hidden" id="hatakodu" name="custId" value="'. $mesaj.'">');
+}
 
 
 function yazdir($conn)
@@ -77,12 +85,13 @@ function yazdir($conn)
 
   $statement = $conn->query("select * FROM salon s INNER JOIN koltuk k on s.id = k.salonid");
 
-  echo ('<div> <h2>Kategorileri Düzenle</h2>
+  echo ('
+  <div> <h2>Kategorileri Düzenle</h2>
    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#insertkategori">Salon Ekle</button></div> ');
 
   echo (' 
     
-    <div class="container tablolar">
+    <div class="container-fluid tablolar">
 
 <table id="example" class="table table-hover" cellspacing="0" width="100%">
     <thead>
@@ -167,6 +176,9 @@ function modal(array $array, array $array2)
     <div class="modal-body">
       <form>
         <div class="form-group">
+
+
+        
           <label for="kategori">Salon Adı</label>
           
           <select id="select" class="form-control selectpicker" data-live-search="true">
@@ -174,6 +186,7 @@ function modal(array $array, array $array2)
 
 
        echo(" <option> </option>");
+
 
   for ($i = 0; $i < count($array); ++$i) {
 

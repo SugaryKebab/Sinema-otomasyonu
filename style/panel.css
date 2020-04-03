@@ -60,3 +60,17 @@ body {
 .tablolar{
   margin-top: 100px;
 }
+
+
+p{
+  text-overflow:ellipsis;
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+p:hover{
+  text-overflow:clip;
+  width:auto;
+  white-space: normal;
+}
