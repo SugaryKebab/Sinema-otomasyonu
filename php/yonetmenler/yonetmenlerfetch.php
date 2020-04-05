@@ -15,7 +15,7 @@ if ($islem == 1) {
 
     try {
         require_once("../baglanti.php");
-        $conn->exec('DELETE FROM `yonetmenler` WHERE `yonetmenler`.`id`= ' . $id);
+        $conn->exec('DELETE FROM `yonetmenler` WHERE `yonetmenler`.`yonetmenlerid`= ' . $id);
         mesaj('silindi');
     } catch (PDOException $e) {
       mesaj('silinemedi');
@@ -44,7 +44,7 @@ if ($islem == 1) {
   $id = $_POST['id'];
   try {
     require_once("../baglanti.php");
-    $sql = " UPDATE `yonetmenler` SET `adi` = '$ad', `soyadi` = '$soyad' WHERE `yonetmenler`.`id` = $id;";
+    $sql = " UPDATE `yonetmenler` SET `adi` = '$ad', `soyadi` = '$soyad' WHERE `yonetmenler`.`yonetmenlerid` = $id;";
 
     $stmt = $conn->prepare($sql);
 
@@ -115,8 +115,8 @@ function yazdir($conn)
     
     <td class="adi" >' . $row['adi'] . '</td>
     <td class="soyadi" >' . $row['soyadi'] . '</td>
-    <td><button  type="button" id="updateyonetmen"  data-toggle="modal" data-target="#updatekategori" value="' . $row['id'] . '" class="btn btn-warning update">Güncelle</button>
-     <button type="button" id="deleteyonetmen" value="' . $row['id'] . '" class="btn btn-danger delete">Sil</buttonbutton> </td>
+    <td><button  type="button" id="updateyonetmen"  data-toggle="modal" data-target="#updatekategori" value="' . $row['yonetmenlerid'] . '" class="btn btn-warning update">Güncelle</button>
+     <button type="button" id="deleteyonetmen" value="' . $row['yonetmenlerid'] . '" class="btn btn-danger delete">Sil</buttonbutton> </td>
     </tr>
     ');
     }

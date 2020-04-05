@@ -17,11 +17,13 @@ if ($islem == 1) {
   yazdir($conn);
 } else if ($islem == 2) {
   $id = $_POST['id'];
-
-
+ $resimadi = $_POST['resimadi'];
+ $string = preg_replace('/\s+/', '',  $resimadi);
   try {
     require_once("../baglanti.php");
-    $conn->exec('DELETE FROM `kategori` WHERE `kategori`.`id`= ' . $id);
+    $conn->exec('DELETE FROM `film` WHERE `film`.`filmid`= ' . $id);
+    chown(dirname(__FILE__) . "\upload\\".$resimadi,0777);
+    unlink(dirname(__FILE__) . "\upload\\". $string );
     mesaj('silindi');
   } catch (PDOException $e) {
     mesaj('silinemedi');
@@ -42,7 +44,7 @@ if ($islem == 1) {
 
   if ($image->uploaded) {
 
-    $image->file_new_name_body = $filmad;
+    $image->file_new_name_body = uniqid();
     $image->image_convert = 'jpg';
   
     $image->image_resize = true;
@@ -57,11 +59,11 @@ if ($islem == 1) {
     }
   }
 
-  $ad = $_POST['ad'];
+
   try {
     require_once("../baglanti.php");
     $conn->exec("INSERT INTO `film` ( `ad`, `kategoriid`, `yonetmenid`, `sure`, `ozet`, `vizyontarihi`, `kapakresmi`)
-     VALUES ( '$filmad', '$kategori', '$yonetmen', '$sure', '$ozet', '$vizyontarihi', ' $image->file_dst_path $image->file_dst_name ');");
+     VALUES ( '$filmad', '$kategori', '$yonetmen', '$sure', '$ozet', '$vizyontarihi', ' $image->file_dst_name ');");
     mesaj('eklendi');
   } catch (PDOException $e) {
     mesaj('eklenemedi');
@@ -147,15 +149,15 @@ function yazdir($conn)
 
     echo ('    <tr>   
         <td class="filmad" >' . $row['ad'] . '</td>
-        <td id="' . $row['kategoriid'] . '" class="kategori" >' . $row['kategori'] . '</td>
-        <td id="' . $row['yonetmenid'] . '" class="yonetmen" >' . $row['adi'] . '  ' . $row['soyadi'] . '</td>
+        <td value="' . $row['kategoriid'] . '" class="kategori" >' . $row['kategori'] . '</td>
+        <td value="' . $row['yonetmenid'] . '" class="yonetmen" >' . $row['adi'] . '  ' . $row['soyadi'] . '</td>
         <td class="sure" >' . $row['sure'] . '</td>
         <td class="ozet" > <p> ' . $row['ozet'] . ' </p></td>
         <td class="vizyontarihi" >' . $row['vizyontarihi'] . '</td>
-        <td class="kapakresmi" >' . $row['kapakresmi'] . '</td>
-
+        <td class="kapakresmi" > <button type="button" id="resimgoster" value="'. $row['kapakresmi'] .'"data-toggle="modal" data-target="#resim"  class="btn btn-info">Önizle</button> </td>
+        
     <td><button  type="button" id="kategoriupdate"  data-toggle="modal" data-target="#updatekategori" value="' . $row['filmid'] . '" class="btn btn-warning update">Güncelle</button>
-     <button type="button" id="deletekategori" value="' . $row['filmid'] . '" class="btn btn-danger delete">Sil</buttonbutton> </td>
+     <button type="button" id="deletefilm" value="' . $row['filmid'] . '" class="btn btn-danger delete">Sil</buttonbutton> </td>
     </tr>
     ');
   }
@@ -330,4 +332,33 @@ function modal(array $kategori, array $kategoriid, array $yonetmenid, array $yon
    </div>
  </div>
 </div>');
+
+
+
+echo ('  <div class="modal" id="resim" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Kapak Resmi</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+        <img  id="resmigoster" src="" alt="">
+        </div>
+      
+    
+        <button type="submit " data-backdrop="false" data-dismiss="modal" class="btn btn-primary kategoriupdate">Güncelle</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+</div>');
+
+
+
 }

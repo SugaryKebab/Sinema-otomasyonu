@@ -91,7 +91,10 @@
 
 <body>
 
+  <?php
 
+
+  ?>
   <div class="d-flex" id="wrapper">
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
@@ -160,7 +163,7 @@
     <div class="icerik">
 
 
-      <div id="tablo" style="margin-top: 50px; margin-left:50px;">
+      <div class="container" id="tablo" style="margin-top: 50px; margin-left:50px;">
 
 
       </div>
@@ -258,11 +261,6 @@
               });
               $('select').selectpicker();
 
-              $('#select').on('change', function(e) {
-
-                alert($(this).find("option:selected").val());
-
-              });
 
 
 
@@ -478,7 +476,7 @@
       $(document).on('click', '.kategoriupdate', function() {
         var ad = $('#updatekategorideger').val();
         var id = $('#updatekategoriid').val();
-        alert(id);
+
         $.ajax({
           type: 'POST',
           url: 'php/film/kategorifetch.php',
@@ -527,6 +525,15 @@
             ad: ad
           },
           success: function(data) {
+            var $response = $(data);
+
+            var hata = $response.filter('#hatakodu').val();
+
+            if (hata == 'eklendi') {
+              succes("Veri başarıyla eklendi.");
+            } else if (hata == 'eklenemedi') {
+              error("Veri  eklenemedi.");
+            }
             $('#tablo').empty().append(data);
             $('#example').DataTable({
               'language': {
@@ -553,6 +560,16 @@
             id: deger
           },
           success: function(data) {
+            var $response = $(data);
+
+            var hata = $response.filter('#hatakodu').val();
+
+            if (hata == 'silindi') {
+              succes("Veri başarıyla silindi.");
+            } else if (hata == 'guncellenemedi') {
+              error("Veri silinemedi.");
+            }
+
             $('#tablo').empty().append(data);
             $('#example').DataTable({
               'language': {
@@ -592,6 +609,16 @@
             id: id
           },
           success: function(data) {
+            var $response = $(data);
+
+            var hata = $response.filter('#hatakodu').val();
+
+            if (hata == 'guncellendi') {
+              succes("Veri başarıyla güncellendi.");
+            } else if (hata == 'guncellenemedi') {
+              error("Veri  güncellenemedi.");
+            }
+
             $('#tablo').empty().append(data);
             $('#example').DataTable({
               'language': {
@@ -606,6 +633,81 @@
 
       });
 
+
+      $(document).on('click', '#koltukupdate', function() {
+
+        var idler = $(this).val();
+
+        var array = idler.split(',');
+
+        var ad = array[0];
+
+
+
+
+        alert(ad);
+        var satirharfi = $(this).closest("tr").find(".satirharfi").text();
+        var toplamkoltuk = $(this).closest("tr").find(".koltuk").text();
+
+        satirharfi = satirharfi.replace(/\s+/g, '');
+        toplamkoltuk = toplamkoltuk.replace(/\s+/g, '');
+
+
+        $('select[name=updateselectkoltuk]').val(satirharfi);
+        $('select[name=updatesalonadlari]').val(ad);
+        $('.selectpicker').selectpicker('refresh');
+
+
+
+        $('#koltukid').val(array[1]);
+
+        $('#updatekoltuknumara').val(toplamkoltuk);
+
+
+      });
+
+
+      $(document).on('click', '.updatekoltuk', function() {
+        var salonid = $('#updatesalonid').find("option:selected").val();
+      
+        var harf = $('#updateselectkoltuk').find("option:selected").val();
+        var koltuksayisi = $('#updatekoltuknumara').val();
+        var koltukid = $('#koltukid').val();
+
+        $.ajax({
+          type: 'POST',
+          url: 'php/salon/koltukfetch.php',
+          data: {
+            islem: 4,
+            salonid: salonid,
+            harf: harf,
+            koltuksayisi: koltuksayisi,
+            koltukid: koltukid
+          },
+          success: function(data) {
+            var $response = $(data);
+
+            var hata = $response.filter('#hatakodu').val();
+
+            if (hata == 'guncellendi') {
+              succes("Veri başarıyla güncellendi.");
+            } else if (hata == 'guncellenemedi') {
+              error("Veri  güncellenemedi.");
+            }
+
+            $('#tablo').empty().append(data);
+            $('#example').DataTable({
+              'language': {
+                'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+              }
+            });
+
+
+          },
+
+        });
+
+      });
 
 
 
@@ -632,6 +734,7 @@
                 'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
               }
             });
+            $('select').selectpicker();
 
 
           },
@@ -642,6 +745,45 @@
 
 
       });
+
+      $(document).on('click', '#koltukdelete', function() {
+        var deger = $(this).val();
+
+        $.ajax({
+          type: 'POST',
+          url: 'php/salon/koltukfetch.php',
+          data: {
+            islem: 2,
+            id: deger
+          },
+          success: function(data) {
+            var $response = $(data);
+
+            var hata = $response.filter('#hatakodu').val();
+
+            if (hata == 'silindi') {
+              succes("Veri başarıyla silindi.");
+            } else if (hata == 'guncellenemedi') {
+              error("Veri silinemedi.");
+            }
+
+
+
+
+            $('#tablo').empty().append(data);
+            $('#example').DataTable({
+              'language': {
+                'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+              }
+            });
+
+
+          },
+
+        });
+
+      });
+
 
 
       $(document).on('click', '#yonetmeninsert', function() {
@@ -787,15 +929,15 @@
         var $form_data = new FormData();
 
 
-       
-       $form_data.append('filmadi', $filmadi);
-       $form_data.append('kategori',$kategori);
-       $form_data.append('yonetmen',$yonetmen);
-       $form_data.append('sure',$sure);
-       $form_data.append('ozet',$ozet );
-       $form_data.append('vizyontarihi',$vizyontarihi);
-       $form_data.append('islem','3');
-       $form_data.append("resim", $("#kapakresmi")[0].files[0]);
+
+        $form_data.append('filmadi', $filmadi);
+        $form_data.append('kategori', $kategori);
+        $form_data.append('yonetmen', $yonetmen);
+        $form_data.append('sure', $sure);
+        $form_data.append('ozet', $ozet);
+        $form_data.append('vizyontarihi', $vizyontarihi);
+        $form_data.append('islem', '3');
+        $form_data.append("resim", $("#kapakresmi")[0].files[0]);
 
 
 
@@ -830,6 +972,85 @@
           },
 
         });
+
+      });
+
+      $(document).on('click', '#deletefilm', function() {
+        var deger = $(this).val();
+        var $resimadi = $(this).closest("tr").find(".kapakresmi").text();
+        $.ajax({
+          type: 'POST',
+          url: 'php/film/filmfetch.php',
+          data: {
+            islem: 2,
+            id: deger,
+            resimadi: $resimadi
+          },
+          success: function(data) {
+            var $response = $(data);
+
+            var hata = $response.filter('#hatakodu').val();
+
+            if (hata == 'silindi') {
+              succes("Veri başarıyla silindi.");
+            } else if (hata == 'guncellenemedi') {
+              error("Veri silinemedi.");
+            }
+
+
+            $('#tablo').empty().append(data);
+            $('#example').DataTable({
+              'language': {
+                'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+              }
+            });
+
+
+          },
+
+        });
+
+      });
+
+
+
+      $(document).on('click', '#updateyonetmen', function() {
+
+
+        var $filmadi = $(this).closest("tr").find(".filmad").text();
+        var $kategorid = $(this).closest("tr").find(".kategoriid").val();
+        var $kategori = $(this).closest("tr").find(".kategori").text();
+        var $yonetmenid = $(this).closest("tr").find(".kategoriid").val();
+        var $kategori = $(this).closest("tr").find(".kategori").text();
+
+
+
+
+
+
+
+
+
+
+
+
+        $('#updateyonetmenad').val($adi);
+        $('#updateyonetmensoyad').val($soyadi);
+        $('#yonetmenlerid').val($(this).val());
+
+
+      });
+
+
+      $(document).on('click', '#resimgoster', function() {
+        var kapak = $(this).val();
+        kapak = kapak.replace(/\s+/g, '');
+      
+        var resimsrc = 'php/film/upload/' + kapak;
+          
+
+        $("#resmigoster").attr("src", resimsrc);
+
 
       });
     </script>

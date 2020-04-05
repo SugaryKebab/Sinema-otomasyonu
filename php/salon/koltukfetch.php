@@ -11,18 +11,16 @@ $islem = $_POST['islem'];
 if ($islem == 1) {
 
   yazdir($conn);
-
- 
-
-  
 } else if ($islem == 2) {
   $id = $_POST['id'];
 
 
   try {
     require_once("../baglanti.php");
-    $conn->exec('DELETE FROM `salon` WHERE `salon`.`id`= ' . $id);
+    $conn->exec('DELETE FROM `koltuk` WHERE `koltuk`.`koltukid`= ' . $id);
+    mesaj('silindi');
   } catch (PDOException $e) {
+    mesaj('silinemedi');
   }
 
 
@@ -37,46 +35,55 @@ if ($islem == 1) {
 
   try {
     require_once("../baglanti.php");
-    $conn->exec('INSERT INTO koltuk (salonid,satirharfi,toplamkoltuk) VALUES( '.$id.' , "'.$harf.'" , '.$sayi.')');
+    $conn->exec('INSERT INTO koltuk (salonid,satirharfi,toplamkoltuk) VALUES( ' . $id . ' , "' . $harf . '" , ' . $sayi . ')');
   } catch (PDOException $e) {
     echo ($e);
   }
   yazdir($conn);
 } else if ($islem == 4) {
-  $ad = $_POST['ad'];
-  $id = $_POST['id'];
+  
+  $salonid = $_POST['salonid'];
+  $harf = $_POST['harf'];
+  $koltuksayisi = $_POST['koltuksayisi'];
+  $koltukid = $_POST['koltukid'];
+
+
+
+
   try {
     require_once("../baglanti.php");
-    $sql = "UPDATE salon SET ad='$ad' WHERE id=$id";
+    $sql = "UPDATE `koltuk` SET 
+     `satirharfi` = '$harf', `toplamkoltuk` = '$koltuksayisi', `salonid` = '$salonid'
+     WHERE `koltuk`.`koltukid` =   $koltukid";
 
     $stmt = $conn->prepare($sql);
 
 
     $stmt->execute();
 
-    echo $stmt->rowCount() . " records UPDATED successfully";
+    mesaj('guncellendi');
   } catch (PDOException $e) {
-    echo $sql . "<br>" . $e->getMessage();
+    mesaj('guncellenemedi');
   }
   yazdir($conn);
 } else if ($islem == 5) {
   $id = $_POST['id'];
 
 
-  $statement = $conn->query("select satirharfi from koltuk where id = ". $id);
+  $statement = $conn->query("select satirharfi from koltuk where id = " . $id);
 
   while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
 
     $salonlarad[] = $row['ad'];
     $salonlarid[] = $row['id'];
   }
-
 }
 
 
 
-function mesaj($mesaj){
-echo('<input type="hidden" id="hatakodu" name="custId" value="'. $mesaj.'">');
+function mesaj($mesaj)
+{
+  echo ('<input type="hidden" id="hatakodu" name="custId" value="' . $mesaj . '">');
 }
 
 
@@ -86,7 +93,7 @@ function yazdir($conn)
   $statement = $conn->query("select * FROM salon s INNER JOIN koltuk k on s.id = k.salonid");
 
   echo ('
-  <div> <h2>Kategorileri Düzenle</h2>
+  <div> <h2>Salon Koltuklarını Düzenle</h2>
    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#insertkategori">Salon Ekle</button></div> ');
 
   echo (' 
@@ -128,11 +135,11 @@ function yazdir($conn)
     echo ('    <tr>   
     
     
-    <td>' . $row['ad'] . '</td>
-    <td>' . $row['satirharfi'] . '</td>
-    <td>' . $row['toplamkoltuk'] . '</td>
-    <td><button  type="button" id="salonupdate"  data-toggle="modal" data-target="#updatekategori" value="' . $row['salonid'] . "," .  $row['koltukid'] . '" class="btn btn-warning update">Güncelle</button>
-     <button type="button" id="salondelete" value="' . $row['salonid'] . "," .  $row['koltukid'] . '" class="btn btn-danger delete">Sil</buttonbutton> </td>
+    <td class="ad"  >' . $row['ad'] . '</td>
+    <td class="satirharfi">   ' . $row['satirharfi'] . '</td>
+    <td class="koltuk"> ' . $row['toplamkoltuk'] . '</td>
+    <td><button  type="button" id="koltukupdate"  data-toggle="modal" data-target="#updatekategori" value="' . $row['salonid'] . "," .  $row['koltukid'] .  '" class="btn btn-warning update">Güncelle</button>
+     <button type="button" id="koltukdelete" value="' .  $row['koltukid'] . '" class="btn btn-danger delete">Sil</buttonbutton> </td>
     </tr>
     ');
   }
@@ -185,19 +192,16 @@ function modal(array $array, array $array2)
           ');
 
 
-       echo(" <option> </option>");
+  echo (" <option> </option>");
 
 
   for ($i = 0; $i < count($array); ++$i) {
 
     echo ('
     
-          <option value="'.$array2[$i].'">' . $array[$i] . '</option>
+          <option value="' . $array2[$i] . '">' . $array[$i] . '</option>
     
      ');
-
-
-    
   }
 
 
@@ -258,7 +262,7 @@ function modal(array $array, array $array2)
 
 
 
-echo ('<div class="modal " id="updatekategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  echo ('<div class="modal " id="updatekategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
   <div class="modal-content">
     <div class="modal-header">
@@ -272,22 +276,19 @@ echo ('<div class="modal " id="updatekategori" tabindex="-1" role="dialog" aria-
         <div class="form-group">
           <label for="kategori">Salon Adı</label>
           
-          <select id="select" class="form-control selectpicker" data-live-search="true">
+          <select name="updatesalonadlari" id="updatesalonid"class="form-control selectpicker" data-live-search="true">
           ');
 
 
-       echo(" <option> </option>");
+  echo (" <option> </option>");
 
   for ($i = 0; $i < count($array); ++$i) {
 
     echo ('
     
-          <option value="'.$array2[$i].'">' . $array[$i] . '</option>
+          <option value="' . $array2[$i] . '">' . $array[$i] . '</option>
     
      ');
-
-
-    
   }
 
 
@@ -295,7 +296,7 @@ echo ('<div class="modal " id="updatekategori" tabindex="-1" role="dialog" aria-
 
 
   <label for="kategori">Koltuk Harfi</label>
-  <select id="selectkoltuk" class="form-control selectpicker" data-live-search="true">
+  <select name="updateselectkoltuk" id="updateselectkoltuk"  class="form-control selectpicker" data-live-search="true">
   <option></option>
   <option>A</option>
   <option>B</option>
@@ -325,8 +326,8 @@ echo ('<div class="modal " id="updatekategori" tabindex="-1" role="dialog" aria-
   <option>Z</option>
 </select>
 <label for="kategori">Koltuk Harfi</label>
-<input  type="number" class="form-control" id="salonkoltuknumara" aria-describedby="emailHelp" placeholder="Koltuk Sayısı Giriniz">
-
+<input  type="number" class="form-control" id="updatekoltuknumara" aria-describedby="emailHelp" placeholder="Koltuk Sayısı Giriniz">
+<input  type="text" class="form-control" id="koltukid" aria-describedby="emailHelp" placeholder="">
 
         </div>
 
@@ -337,14 +338,11 @@ echo ('<div class="modal " id="updatekategori" tabindex="-1" role="dialog" aria-
 
       
     
-        <button type="submit" id="koltukupdate" data-dismiss="modal" class="btn btn-primary insert">Ekle</button>
+        <button type="submit"  data-dismiss="modal" class="btn btn-primary updatekoltuk">Ekle</button>
       </form>
     </div>
 
   </div>
 </div>
 </div>');
-
-
-  
 }

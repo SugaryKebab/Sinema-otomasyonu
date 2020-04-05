@@ -16,7 +16,10 @@ if ($islem == 1) {
     try {
         require_once("../baglanti.php");
         $conn->exec('DELETE FROM `salon` WHERE `salon`.`id`= ' . $id);
+        $conn->exec('DELETE FROM `koltuk` WHERE `koltuk`.`salonid`= ' . $id);
+        mesaj('silindi');
     } catch (PDOException $e) {
+      mesaj('silinemedi');
     }
 
 
@@ -27,8 +30,10 @@ if ($islem == 1) {
         require_once("../baglanti.php");
         $conn->exec('INSERT INTO salon (ad)
         VALUES( "' . $ad.'")' );
+            mesaj('eklendi');
     } catch (PDOException $e) {
-        echo($e);
+   
+        mesaj('eklenemedi');
     }
      yazdir($conn);
 
@@ -46,11 +51,11 @@ if ($islem == 1) {
     
     $stmt->execute();
 
-    echo $stmt->rowCount() . " records UPDATED successfully";
+    mesaj('guncellendi');
     }
 catch(PDOException $e)
     {
-    echo $sql . "<br>" . $e->getMessage();
+      mesaj('guncellenemedi');
     }
     yazdir($conn);
 
@@ -84,6 +89,9 @@ catch(PDOException $e)
 
 
 
+function mesaj($mesaj){
+  echo('<input type="hidden" id="hatakodu" name="custId" value="'. $mesaj.'">');
+  }
 
 
 function yazdir($conn)
@@ -91,7 +99,7 @@ function yazdir($conn)
 
     $statement = $conn->query("select * from salon");
 
-    echo ('<div> <h2>Kategorileri Düzenle</h2>
+    echo ('<div> <h2>Salonları Düzenle</h2>
    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#insertkategori">Salon Ekle</button></div> ');
 
     echo (' 
@@ -150,7 +158,7 @@ function modal()
 <div class="modal-dialog" role="document">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Kategori Ekle</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Salon Ekle</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -183,7 +191,7 @@ function modal()
  <div class="modal-dialog" role="document">
    <div class="modal-content">
      <div class="modal-header">
-       <h5 class="modal-title" id="exampleModalLabel">Kategori Ekle</h5>
+       <h5 class="modal-title" id="exampleModalLabel">Salonları Düzenle</h5>
        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
          <span aria-hidden="true">&times;</span>
        </button>
@@ -193,7 +201,7 @@ function modal()
          <div class="form-group">
            <label for="updatekategori">Kategori</label>
            <input type="text" class="form-control" id="updatesalondeger" aria-describedby="emailHelp" placeholder="Kategori İsmi Giriniz">
-           <input type="text  " class="form-control" id="salonid" aria-describedby="emailHelp" placeholder="Kategori İsmi Giriniz">
+           <input type="hidden" class="form-control" id="salonid" aria-describedby="emailHelp" placeholder="Kategori İsmi Giriniz">
          </div>
        
      

@@ -15,7 +15,7 @@ if ($islem == 1) {
 
     try {
         require_once("../baglanti.php");
-        $conn->exec('DELETE FROM `kategori` WHERE `kategori`.`id`= ' . $id);
+        $conn->exec('DELETE FROM `kategori` WHERE `kategori`.`kategorid`= ' . $id);
         mesaj('silindi');
     } catch (PDOException $e) {
       mesaj('silinemedi');
@@ -40,7 +40,7 @@ if ($islem == 1) {
   $id = $_POST['id'];
   try {
     require_once("../baglanti.php");
-    $sql = "UPDATE kategori SET kategori='$ad' WHERE id=$id";
+    $sql = "UPDATE kategori SET kategori='$ad' WHERE kategorid=$id";
 
     $stmt = $conn->prepare($sql);
 
@@ -108,8 +108,8 @@ function yazdir($conn)
     
     
     <td class="kateogriadi" >' . $row['kategori'] . '</td>
-    <td><button  type="button" id="kategoriupdate"  data-toggle="modal" data-target="#updatekategori" value="' . $row['id'] . '" class="btn btn-warning update">Güncelle</button>
-     <button type="button" id="deletekategori" value="' . $row['id'] . '" class="btn btn-danger delete">Sil</buttonbutton> </td>
+    <td><button  type="button" id="kategoriupdate"  data-toggle="modal" data-target="#updatekategori" value="' . $row['kategorid'] . '" class="btn btn-warning update">Güncelle</button>
+     <button type="button" id="deletekategori" value="' . $row['kategorid'] . '" class="btn btn-danger delete">Sil</buttonbutton> </td>
     </tr>
     ');
     }
