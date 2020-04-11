@@ -122,7 +122,14 @@
             </div>
           </div>
 
-          <a href="#" id="seans" class="list-group-item list-group-item-action bg-light">Seansları Yönet</a>
+          <a data-target="#seanslarliste" id="" data-parent="#accordion" data-toggle="collapse" class="list-group-item list-group-item-action bg-light">Seanslar <i class="fas fa-angle-right"></i></a>
+          <div class="collapse" id="seanslarliste">
+            <div class="list-group">
+              <a href="#" id="seans" class="list-group-item list-group-item-action bg-light">Seansları Yönet </i></a>
+              <a href="#" id="seanssaatleri" class="list-group-item list-group-item-action bg-light">Seans Saatlerini Yönet</a>
+            </div>
+          </div>
+
           <a href="#" id="anasayfa" class="list-group-item list-group-item-action bg-light">Anasayfa Kampanyalar</a>
           <a href="#" id="biletler" class="list-group-item list-group-item-action bg-light">Biletler</a>
           <a href="#" id="uye" class="list-group-item list-group-item-action bg-light">Üyeler</a>
@@ -190,6 +197,7 @@
         });
 
         $(document).ready(function() {
+
 
         });
 
@@ -324,24 +332,77 @@
                   "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
                 }
               });
-              $('select').selectpicker();
 
-
-              $('#vizyontarihi').datepicker({
-                format: 'yyyy-mm-dd',
-
+              $(".custom-file-input").on("change", function() {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
               });
+
               $(".custom-file-input").on("change", function() {
                 var fileName = $(this).val().split("\\").pop();
                 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
               });
 
 
-              $('#select').on('change', function(e) {
 
-                alert($(this).find("option:selected").val());
+              $('.selectpicker').selectpicker();
+
+              $('.selectpicker').selectpicker('refresh');
+              $('.datekontrol').datepicker({
+                format: 'yyyy-mm-dd',
 
               });
+
+
+
+
+
+            },
+
+
+
+          });
+        });
+
+        $("#seans").click(function() {
+          $.ajax({
+            type: "POST",
+            url: "php/seans/seansfetch.php",
+
+            data: {
+              islem: '1'
+            },
+            success: function(data) {
+
+
+              $("#tablo").empty().append(data);
+              $('#example').DataTable({
+                "language": {
+                  "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+              });
+
+              $(".custom-file-input").on("change", function() {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+              });
+
+              $(".custom-file-input").on("change", function() {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+              });
+
+
+
+              $('.selectpicker').selectpicker();
+
+              $('.selectpicker').selectpicker('refresh');
+              $('.datekontrol').datepicker({
+                format: 'yyyy-mm-dd',
+
+              });
+
+
 
 
 
@@ -645,7 +706,7 @@
 
 
 
-        alert(ad);
+
         var satirharfi = $(this).closest("tr").find(".satirharfi").text();
         var toplamkoltuk = $(this).closest("tr").find(".koltuk").text();
 
@@ -669,7 +730,7 @@
 
       $(document).on('click', '.updatekoltuk', function() {
         var salonid = $('#updatesalonid').find("option:selected").val();
-      
+
         var harf = $('#updateselectkoltuk').find("option:selected").val();
         var koltuksayisi = $('#updatekoltuknumara').val();
         var koltukid = $('#koltukid').val();
@@ -881,7 +942,7 @@
         var ad = $('#updateyonetmenad').val();
         var soyad = $('#updateyonetmensoyad').val();
         var id = $('#yonetmenlerid').val();
-        alert(id);
+
         $.ajax({
           type: 'POST',
           url: 'php/yonetmenler/yonetmenlerfetch.php',
@@ -967,6 +1028,13 @@
                 'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
               }
             });
+            $('select').selectpicker();
+
+
+            $('.datekontrol').datepicker({
+              format: 'yyyy-mm-dd',
+
+            });
 
 
           },
@@ -977,14 +1045,16 @@
 
       $(document).on('click', '#deletefilm', function() {
         var deger = $(this).val();
-        var $resimadi = $(this).closest("tr").find(".kapakresmi").text();
+        var resimadi = $(this).closest("tr").find(".kapakresmi").find(".kapak").text();
+
+
         $.ajax({
           type: 'POST',
           url: 'php/film/filmfetch.php',
           data: {
             islem: 2,
             id: deger,
-            resimadi: $resimadi
+            resimadi: resimadi
           },
           success: function(data) {
             var $response = $(data);
@@ -1004,6 +1074,13 @@
                 'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
               }
             });
+            $('select').selectpicker();
+
+
+            $('.datekontrol').datepicker({
+              format: 'yyyy-mm-dd',
+
+            });
 
 
           },
@@ -1016,28 +1093,15 @@
 
       $(document).on('click', '#updateyonetmen', function() {
 
-
         var $filmadi = $(this).closest("tr").find(".filmad").text();
         var $kategorid = $(this).closest("tr").find(".kategoriid").val();
         var $kategori = $(this).closest("tr").find(".kategori").text();
         var $yonetmenid = $(this).closest("tr").find(".kategoriid").val();
         var $kategori = $(this).closest("tr").find(".kategori").text();
 
-
-
-
-
-
-
-
-
-
-
-
         $('#updateyonetmenad').val($adi);
         $('#updateyonetmensoyad').val($soyadi);
         $('#yonetmenlerid').val($(this).val());
-
 
       });
 
@@ -1045,14 +1109,350 @@
       $(document).on('click', '#resimgoster', function() {
         var kapak = $(this).val();
         kapak = kapak.replace(/\s+/g, '');
-      
+
         var resimsrc = 'php/film/upload/' + kapak;
-          
+
 
         $("#resmigoster").attr("src", resimsrc);
 
 
       });
+
+      $(document).on('click', '#filmupdate', function() {
+        var idler = $(this).val();
+
+        var array = idler.split(',');
+
+        var yonetmenid = array[0];
+        var kategorid = array[1];
+        var filmadi = $(this).closest("tr").find(".filmad").text();
+        var sure = $(this).closest("tr").find(".sure").text();
+        var ozet = $(this).closest("tr").find(".ozet").text();
+        var vizyontarihi = $(this).closest("tr").find(".vizyontarihi").text();
+        var kapak = $(this).closest("tr").find(".kapakresmi").find(".kapak").text();
+
+        kapak = kapak.replace(/\s+/g, '');
+
+
+        kategorid = kategorid.replace(/\s+/g, '');
+
+        yonetmenid = yonetmenid.replace(/\s+/g, '');
+
+
+        $('select[name=updatekategorid]').val(kategorid);
+        $('select[name=updateyonetmenid]').val(yonetmenid);
+        $('.selectpicker').selectpicker('refresh');
+        $("#updatefilminadi").val('');
+        $('#updatefilminadi').val(filmadi);
+        $('#updatefilmsuresi').val(sure);
+        $('#updatefilmozet').val(sure);
+        $('#updatevizyontarihi').val(vizyontarihi);
+        $('#filmid').val(array[2]);
+        $('#eskiresim').val(kapak);
+
+
+      });
+
+
+      $(document).on('click', '.filmupdate', function() {
+        var resimdegisikligi = $("input[name='updateresim']").is(":checked");
+
+        if (resimdegisikligi) {
+
+          resimdegisikligi = 'resimvar';
+          var filmad = $('#updatefilminadi').val();
+          var kategori = $('#updatekategoriselect').find("option:selected").val();
+          var yonetmen = $('#updateyonetmenselect').find("option:selected").val();
+          var sure = $('#updatefilmsuresi').val();
+          var ozet = $('#updatefilmozet').val();
+          var vizyontarihi = $('#updatevizyontarihi').val();
+          var filmid = $('#filmid').val();
+          var eskiresim = $('#eskiresim').val();
+
+
+
+          var filmad = $('#updatefilminadi').val();
+          var kategori = $('#updatekategoriselect').find("option:selected").val();
+          var yonetmen = $('#updateyonetmenselect').find("option:selected").val();
+          var sure = $('#updatefilmsuresi').val();
+          var ozet = $('#updatefilmozet').val();
+          var vizyontarihi = $('#updatevizyontarihi').val();
+          var filmid = $('#filmid').val();
+          var eskiresim = $('#eskiresim').val();
+
+
+
+          var form_data = new FormData();
+
+
+
+          form_data.append('filmad', filmad);
+          form_data.append('kategori', kategori);
+          form_data.append('yonetmen', yonetmen);
+          form_data.append('sure', sure);
+          form_data.append('ozet', ozet);
+          form_data.append('vizyontarihi', vizyontarihi);
+          form_data.append('islem', '4');
+          form_data.append('filmid', filmid);
+          form_data.append("resim", $("#updatekapakresmi")[0].files[0]);
+          form_data.append("eskiresim", eskiresim);
+          form_data.append("resimdegisikligi", resimdegisikligi);
+
+
+
+
+          $.ajax({
+            type: 'POST',
+            url: 'php/film/filmfetch.php',
+            data: form_data,
+            processData: false, // tell jQuery not to process the data
+            contentType: false,
+            success: function(data) {
+              var $response = $(data);
+
+              var hata = $response.filter('#hatakodu').val();
+
+              if (hata == 'guncellendi') {
+                succes("Veri başarıyla güncellendi.");
+              } else if (hata == 'guncellenemedi') {
+                error("Veri  güncellenemedi.");
+              }
+
+
+              $('#tablo').empty().append(data);
+              $('#example').DataTable({
+                'language': {
+                  'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+                }
+              });
+              $('select').selectpicker();
+
+
+              $('.datekontrol').datepicker({
+                format: 'yyyy-mm-dd',
+
+              });
+
+
+            },
+
+          });
+
+
+
+
+        } else {
+          resimdegisikligi = 'resimyok';
+          var filmad = $('#updatefilminadi').val();
+          alert(filmad);
+
+
+          var kategori = $('#updatekategoriselect').find("option:selected").val();
+          var yonetmen = $('#updateyonetmenselect').find("option:selected").val();
+          var sure = $('#updatefilmsuresi').val();
+          var ozet = $('#updatefilmozet').val();
+          var vizyontarihi = $('#updatevizyontarihi').val();
+          var filmid = $('#filmid').val();
+
+          $.ajax({
+            type: 'POST',
+            url: 'php/film/filmfetch.php',
+            data: {
+              islem: 4,
+              filmad: filmad,
+              kategori: kategori,
+              yonetmen: yonetmen,
+              sure: sure,
+              ozet: ozet,
+              vizyontarihi: vizyontarihi,
+              filmid: filmid,
+              resimdegisikligi: resimdegisikligi
+            },
+            success: function(data) {
+              var $response = $(data);
+              var hata = $response.filter('#hatakodu').val();
+
+              if (hata == 'guncellendi') {
+                succes("Veri başarıyla güncellendi.");
+              } else if (hata == 'guncellenemedi') {
+                error("Veri  güncellenemedi.");
+              }
+
+
+              $('#tablo').empty().append(data);
+              $('#example').DataTable({
+                'language': {
+                  'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+                }
+              });
+              $('select').selectpicker();
+
+
+              $('.datekontrol').datepicker({
+                format: 'yyyy-mm-dd',
+
+              });
+
+
+            },
+
+          });
+        }
+
+
+
+
+      });
+
+
+      $(document).on('click', '#seansinsert', function() {
+        var seansadi = $('#seansadi').val();
+        var seansbaslangic = $('#seansbaslangicgunu').val();
+        var seansbitisgunu = $('#seansbitisgunu').val();
+        var filmid = $('#filmselect').find("option:selected").val();
+        var salonid = $('#salonselect').find("option:selected").val();
+        var ucret = $('#seansucreti').val();
+        var boyut = $('#boyut').val();
+        var altyazi = $("input[name='altyazi']").is(":checked");
+        if(altyazi){
+          altyazi = 'E';
+        }else{
+          altyazi = 'H';
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: 'php/seans/seansfetch.php',
+            data: {
+              islem: 3,
+              seansadi:seansadi,
+              seansbaslangic: seansbaslangic,
+              seansbitisgunu:seansbitisgunu,
+              filmid:filmid,
+              salonid:salonid,
+              ucret:ucret,
+              boyut:boyut,
+              altyazi:altyazi
+            },
+            success: function(data) {
+              var $response = $(data);
+              var hata = $response.filter('#hatakodu').val();
+
+              if (hata == 'guncellendi') {
+                succes("Veri başarıyla güncellendi.");
+              } else if (hata == 'guncellenemedi') {
+                error("Veri  güncellenemedi.");
+              }
+
+
+              $('#tablo').empty().append(data);
+              $('#example').DataTable({
+                'language': {
+                  'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+                }
+              });
+              $('select').selectpicker();
+
+
+              $('.datekontrol').datepicker({
+                format: 'yyyy-mm-dd',
+
+              });
+
+
+            },
+
+          });
+
+
+
+    
+      });
+
+      
+      $(document).on('click', '#deleteseans', function() {
+        var id = $(this).val();
+      
+
+        $.ajax({
+            type: 'POST',
+            url: 'php/seans/seansfetch.php',
+            data: {
+              islem: 2,
+              id:id,
+       
+            },
+            success: function(data) {
+              var $response = $(data);
+              var hata = $response.filter('#hatakodu').val();
+
+              if (hata == 'silindi') {
+              succes("Veri başarıyla silindi.");
+            } else if (hata == 'guncellenemedi') {
+              error("Veri silinemedi.");
+            }
+
+              $('#tablo').empty().append(data);
+              $('#example').DataTable({
+                'language': {
+                  'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json'
+                }
+              });
+              $('select').selectpicker();
+
+
+              $('.datekontrol').datepicker({
+                format: 'yyyy-mm-dd',
+
+              });
+
+
+            },
+
+          });
+
+
+
+    
+      });
+
+
+      $(document).on('click', '#seansupdate', function() {
+        var idler = $(this).val();
+
+        var array = idler.split(',');
+
+        var seansid = array[0];
+        var salonid = array[1];
+        var filmid = array[2];
+
+        filmid = filmid.replace(/\s+/g, '');
+
+        salonid = salonid.replace(/\s+/g, '');
+
+
+        var seansadi = $(this).closest("tr").find(".seansadi").text();
+        var baslangicgunu = $(this).closest("tr").find(".baslangicgunu").text();
+        var bitisgunu = $(this).closest("tr").find(".bitisgunu").text();
+        var ucret = $(this).closest("tr").find(".ucret").text();
+        var boyut = $(this).closest("tr").find(".boyut").text();
+        var altyazı = $(this).closest("tr").find(".altyazi").text();
+
+        $('select[name=updatefilmselect]').val(filmid);
+        $('select[name=updatesalonselect]').val(salonid);
+        $('.selectpicker').selectpicker('refresh');
+        $('#updateseansadi').val(seansadi);
+        $('#updateseansbaslangicgunu').val(baslangicgunu);
+        $('#updateseansbitisgunu').val(bitisgunu);
+        $('#updateseansucreti').val(ucret);
+        $('#updateboyut').val(boyut);
+
+       
+
+
+      });
+
+
     </script>
   </div>
   <script>

@@ -16,6 +16,7 @@ if ($islem == 1) {
     try {
         require_once("../baglanti.php");
         $conn->exec('DELETE FROM `kategori` WHERE `kategori`.`kategorid`= ' . $id);
+        $conn->exec('DELETE FROM `film` WHERE `film`.`kategoriid`= ' . $id);
         mesaj('silindi');
     } catch (PDOException $e) {
       mesaj('silinemedi');

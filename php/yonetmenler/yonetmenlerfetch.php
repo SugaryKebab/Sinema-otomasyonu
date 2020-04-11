@@ -16,6 +16,7 @@ if ($islem == 1) {
     try {
         require_once("../baglanti.php");
         $conn->exec('DELETE FROM `yonetmenler` WHERE `yonetmenler`.`yonetmenlerid`= ' . $id);
+        $conn->exec('DELETE FROM `film` WHERE `film`.`yonetmenlerid`= ' . $id);
         mesaj('silindi');
     } catch (PDOException $e) {
       mesaj('silinemedi');
@@ -139,7 +140,7 @@ function modal()
 <div class="modal-dialog" role="document">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Kategori Ekle</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Yönetmen Ekle</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
