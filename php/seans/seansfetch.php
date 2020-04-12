@@ -14,140 +14,86 @@ if ($islem == 1) {
 
 
 
-    yazdir($conn);
+  yazdir($conn);
 } else if ($islem == 2) {
-    $id = $_POST['id'];
-    try {
-        require_once("../baglanti.php");
-        $conn->exec('DELETE FROM `seans` WHERE `seans`.`id`= ' . $id);
+  $id = $_POST['id'];
+  try {
+    require_once("../baglanti.php");
+    $conn->exec('DELETE FROM `seans` WHERE `seans`.`id`= ' . $id);
 
-        mesaj('silindi');
-    } catch (PDOException $e) {
-        mesaj('silinemedi');
-    }
+    mesaj('silindi');
+  } catch (PDOException $e) {
+    mesaj('silinemedi');
+  }
 
 
-    yazdir($conn);
+  yazdir($conn);
 } else if ($islem == 3) {
-    require_once('../class.upload.php');
+  require_once('../class.upload.php');
 
-    $seansadi = $_POST['seansadi'];
-    $seansbaslangic = $_POST['seansbaslangic'];
-    $seansbitisgunu = $_POST['seansbitisgunu'];
-    $filmid = $_POST['filmid'];
-    $salonid = $_POST['salonid'];
-    $ucret = $_POST['ucret'];
-    $boyut = $_POST['boyut'];
-    $altyazi = $_POST['altyazi'];
- 
- 
+  $seansadi = $_POST['seansadi'];
+  $seansbaslangic = $_POST['seansbaslangic'];
+  $seansbitisgunu = $_POST['seansbitisgunu'];
+  $filmid = $_POST['filmid'];
+  $salonid = $_POST['salonid'];
+  $ucret = $_POST['ucret'];
+  $boyut = $_POST['boyut'];
+  $altyazi = $_POST['altyazi'];
 
- 
 
-    try {
-        require_once("../baglanti.php");
-        $conn->exec("INSERT INTO `seans` ( `seansadi`, `filmid`, `baslangicgunu`, `bitisgunu`, `salonid`, `ucret`, `altyazi`, `boyut`) 
+
+
+
+  try {
+    require_once("../baglanti.php");
+    $conn->exec("INSERT INTO `seans` ( `seansadi`, `filmid`, `baslangicgunu`, `bitisgunu`, `salonid`, `ucret`, `altyazi`, `boyut`) 
         VALUES ( '$seansadi', '$filmid', '$seansbaslangic', '$seansbitisgunu', '$salonid', '$ucret', '$altyazi', '$boyut');");
-        mesaj('eklendi');
-    } catch (PDOException $e) {
-        mesaj('eklenemedi');
-    }
-    yazdir($conn);
+    mesaj('eklendi');
+  } catch (PDOException $e) {
+    mesaj('eklenemedi');
+  }
+  yazdir($conn);
 } else if ($islem == 4) {
 
-    $resimdegisikligi = $_POST['resimdegisikligi'];
-
-    if ($resimdegisikligi == "resimvar") {
-        require_once('../class.upload.php');
-        $filmad = $_POST['filmad'];
-        $kategori = $_POST['kategori'];
-        $yonetmen = $_POST['yonetmen'];
-        $ozet = $_POST['ozet'];
-        $sure = $_POST['sure'];
-        $vizyontarihi = $_POST['vizyontarihi'];
-        $filmid = $_POST['filmid'];
-        $eskiresim = $_POST['eskiresim'];
-        $image = new Upload($_FILES['resim']);
-
-        $string = preg_replace('/\s+/', '',  $eskiresim);
-        unlink(dirname(__FILE__) . "\upload\\" . $string);
-
-        if ($image->uploaded) {
-
-            $image->file_new_name_body = uniqid();
-            $image->image_convert = 'jpg';
-
-            $image->image_resize = true;
-            $image->image_ratio_crop = true;
-            $image->image_x = 255;
-            $image->image_y = 366;
-            $image->Process('upload');
-            if ($image->processed) {
-            } else {
-            }
-        }
-
-
-        try {
-            require_once("../baglanti.php");
-            $sql = "UPDATE `film`
-   SET `ad` = '$filmad', `kategoriid` = '$kategori', `yonetmenid` = 
-   '$yonetmen', `sure` = '$sure', `ozet` = '$ozet', `vizyontarihi` =
-   '$vizyontarihi', `kapakresmi` =
-   '$image->file_dst_name '
-   WHERE `film`.`filmid` = $filmid ;";
-
-            $stmt = $conn->prepare($sql);
-
-
-            $stmt->execute();
-
-            mesaj('guncellendi');
-        } catch (PDOException $e) {
-            mesaj('guncellenemedi');
-        }
-
-
-        yazdir($conn);
-    } else if ($resimdegisikligi == "resimyok") {
-        $filmad = $_POST['filmad'];
-        $kategori = $_POST['kategori'];
-        $yonetmen = $_POST['yonetmen'];
-        $ozet = $_POST['ozet'];
-        $sure = $_POST['sure'];
-        $vizyontarihi = $_POST['vizyontarihi'];
-        $filmid = $_POST['filmid'];
+  $seansadi = $_POST['seansadi'];
+  $seansbaslangic = $_POST['seansbaslangic'];
+  $seansbitisgunu = $_POST['seansbitisgunu'];
+  $filmid = $_POST['filmid'];
+  $salonid = $_POST['salonid'];
+  $ucret = $_POST['ucret'];
+  $boyut = $_POST['boyut'];
+  $altyazi = $_POST['altyazi'];
+  $seansid = $_POST['seansid'];
 
 
 
-        try {
-            require_once("../baglanti.php");
-            $sql = "UPDATE `film`
-   SET `ad` = '$filmad', `kategoriid` = '$kategori', `yonetmenid` = 
-   '$yonetmen', `sure` = '$sure', `ozet` = '$ozet', `vizyontarihi` =
-   '$vizyontarihi'
-   WHERE `film`.`filmid` = $filmid ;";
+  try {
+    require_once("../baglanti.php");
+    $sql = "UPDATE `seans` 
+            SET `seansadi` = '$seansadi', `filmid` = '$filmid', `baslangicgunu` = '$seansbaslangic', 
+            `bitisgunu` = '$seansbitisgunu', `salonid` = '$salonid', `ucret` = '$ucret', 
+            `altyazi` = '$altyazi', 
+            `boyut` = '$boyut' WHERE `seans`.`id` = $seansid;";
 
-            $stmt = $conn->prepare($sql);
-
-
-            $stmt->execute();
-
-            mesaj('guncellendi');
-        } catch (PDOException $e) {
-            mesaj('guncellenemedi');
-        }
+    $stmt = $conn->prepare($sql);
 
 
-        yazdir($conn);
-    }
+    $stmt->execute();
+
+    mesaj('guncellendi');
+  } catch (PDOException $e) {
+    mesaj('guncellenemedi');
+  }
+
+
+  yazdir($conn);
 }
 
 
 
 function mesaj($mesaj)
 {
-    echo ('<input type="hidden" id="hatakodu" name="custId" value="' . $mesaj . '">');
+  echo ('<input type="hidden" id="hatakodu" name="custId" value="' . $mesaj . '">');
 }
 
 
@@ -155,17 +101,17 @@ function mesaj($mesaj)
 function yazdir($conn)
 {
 
-    $statement = $conn->query("SELECT * FROM seans AS  sen
+  $statement = $conn->query("SELECT * FROM seans AS  sen
   INNER JOIN ( SELECT * FROM salon 
                INNER JOIN  (SELECT salonid,sum(toplamkoltuk) FROM koltuk
                            GROUP BY salonid) As kol on kol.salonid = salon.id)
                            AS salonlar ON salonlar.salonid = sen.salonid
   INNER JOIN film on film.filmid = sen.filmid");
 
-    echo ('<div> <h2>Seansları Düzenle</h2>
+  echo ('<div> <h2>Seansları Düzenle</h2>
    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#insertkategori">Seans Ekle</button></div> ');
 
-    echo (' 
+  echo (' 
     
     <div class="container tablolar">
 <table id="example" class="table table-hover" cellspacing="0" width="100%">
@@ -208,9 +154,9 @@ function yazdir($conn)
 
 
 
-    while ($row = $statement->fetch(PDO::FETCH_NUM)) {
+  while ($row = $statement->fetch(PDO::FETCH_NUM)) {
 
-        echo ('    <tr>   
+    echo ('    <tr>   
         <td class="seansadi" >' . $row[1] . '</td>
         <td class="baslangicgunu" >' . $row[3] . '</td>
         <td class="bitisgunu" >' . $row[4] . '</td>
@@ -228,54 +174,49 @@ function yazdir($conn)
         <td><button  type="button" id="seansupdate"  data-toggle="modal" data-target="#updatekategori" value="' . $row[0] . ',' . $row[5] . ',' . $row[13] . '" class="btn btn-warning update">Güncelle</button>
         <button type="button" id="deleteseans" value="' . $row[0] . '" class="btn btn-danger delete">Sil</buttonbutton> </td>
 
- 
-
-
-
-
 
     </tr>
     ');
-    }
+  }
 
 
-    echo ('</tbody>
+  echo ('</tbody>
 </table>
 </div>');
 
-    $statement = $conn->query("select * from film");
+  $statement = $conn->query("select * from film");
 
-    $kategori = array();
-    $kategoriid = array();
-    while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+  $kategori = array();
+  $kategoriid = array();
+  while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
 
-        $kategori[] = $row['ad'];
-        $kategoriid[] = $row['filmid'];
-    }
-
-
-    $statement = $conn->query("select * from salon");
-
-    $yonetmenid = array();
-    $yonetmenad = array();
-    while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-
-        $yonetmenid[] = $row['id'];
-        $yonetmenad[] = $row['ad'];
-    }
+    $kategori[] = $row['ad'];
+    $kategoriid[] = $row['filmid'];
+  }
 
 
+  $statement = $conn->query("select * from salon");
+
+  $yonetmenid = array();
+  $yonetmenad = array();
+  while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+
+    $yonetmenid[] = $row['id'];
+    $yonetmenad[] = $row['ad'];
+  }
 
 
 
-    modal($kategori, $kategoriid, $yonetmenid, $yonetmenad);
+
+
+  modal($kategori, $kategoriid, $yonetmenid, $yonetmenad);
 }
 
 
 
 function modal(array $kategori, array $kategoriid, array $yonetmenid, array $yonetmenad)
 {
-    echo ('<div class="modal " id="insertkategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  echo ('<div class="modal " id="insertkategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -310,20 +251,20 @@ function modal(array $kategori, array $kategoriid, array $yonetmenid, array $yon
             ');
 
 
-    echo (" <option> </option>");
+  echo (" <option> </option>");
 
 
-    for ($i = 0; $i < count($kategoriid); ++$i) {
+  for ($i = 0; $i < count($kategoriid); ++$i) {
 
-        echo ('
+    echo ('
       
             <option value="' . $kategoriid[$i] . '">' . $kategori[$i] . '</option>
       
        ');
-    }
+  }
 
 
-    echo ('   </select>
+  echo ('   </select>
   <label for="kategori">Salon</label>
             
   <select id="salonselect" class="form-control selectpicker" data-live-search="true">
@@ -331,22 +272,22 @@ function modal(array $kategori, array $kategoriid, array $yonetmenid, array $yon
     ');
 
 
-    echo (" <option> </option>");
+  echo (" <option> </option>");
 
 
-    for ($i = 0; $i < count($yonetmenid); ++$i) {
+  for ($i = 0; $i < count($yonetmenid); ++$i) {
 
-        echo ('
+    echo ('
         
               <option value="' . $yonetmenid[$i] . '">' . $yonetmenad[$i] . '</option>
         
          ');
-    }
+  }
 
 
 
 
-    echo ('
+  echo ('
     </select>
 
 
@@ -425,20 +366,20 @@ function modal(array $kategori, array $kategoriid, array $yonetmenid, array $yon
             ');
 
 
-    echo (" <option> </option>");
+  echo (" <option> </option>");
 
 
-    for ($i = 0; $i < count($kategoriid); ++$i) {
+  for ($i = 0; $i < count($kategoriid); ++$i) {
 
-        echo ('
+    echo ('
       
             <option value="' . $kategoriid[$i] . '">' . $kategori[$i] . '</option>
       
        ');
-    }
+  }
 
 
-    echo ('   </select>
+  echo ('   </select>
   <label for="kategori">Salon</label>
             
   <select id="updatesalonselect" name="updatesalonselect" class="form-control selectpicker" data-live-search="true">
@@ -446,22 +387,22 @@ function modal(array $kategori, array $kategoriid, array $yonetmenid, array $yon
     ');
 
 
-    echo (" <option> </option>");
+  echo (" <option> </option>");
 
 
-    for ($i = 0; $i < count($yonetmenid); ++$i) {
+  for ($i = 0; $i < count($yonetmenid); ++$i) {
 
-        echo ('
+    echo ('
         
               <option value="' . $yonetmenid[$i] . '">' . $yonetmenad[$i] . '</option>
         
          ');
-    }
+  }
 
 
 
 
-    echo ('
+  echo ('
     </select>
 
 
@@ -478,13 +419,13 @@ function modal(array $kategori, array $kategoriid, array $yonetmenid, array $yon
 
 
   <div class="form-check">
-  <input class="form-check-input" name="altyazi" type="checkbox" value="" id="updatealtyazi">
+  <input class="form-check-input" name="updatealtyazi" type="checkbox" value="" id="updatealtyazi">
   <label class="form-check-label" for="updateresim">
    Altyazılı
   </label>
 </div>
 
-
+<input type="hidden" class="form-control" id="seansid">
   
 
 
@@ -504,8 +445,4 @@ function modal(array $kategori, array $kategoriid, array $yonetmenid, array $yon
     </div>
   </div>
   </div>');
-
-
-
-
 }
