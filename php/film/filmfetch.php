@@ -511,7 +511,7 @@ function modal(array $kategori, array $kategoriid, array $yonetmenid, array $yon
         </div>
       
     
-        <button type="submit " data-backdrop="false" data-dismiss="modal" class="btn btn-danger kategoriupdate">Kapat</button>
+        <button type="submit " data-backdrop="false" data-dismiss="modal" class="btn btn-danger">Kapat</button>
       </form>
     </div>
 

@@ -18,7 +18,7 @@ while ($row = $statement->fetch(PDO::FETCH_NUM)) {
     echo('<option id='.$i.'>'.$row[10].' ile '.$row[12].' </option>');
 }
 
-echo('<option style="display:none;" id="toplam" value='.$i.'>'. $i.'</option>');
+echo('<option style="display:none;" id="updatetoplam" value='.$i.'>'. $i.'</option>');
 
 
 

@@ -1,16 +1,26 @@
 <?php
 include_once("../baglanti.php");
 
-$statement = $conn->query("select * from anaysayfaslayt");
+
+$ad = $_POST['ad'];
+$soyad = $_POST['soyad'];
+$cinsiyet = $_POST['cinsiyet'];
+$tel = $_POST['tel'];
+$eposta = $_POST['eposta'];
+$sifre = $_POST['sifre'];
+$sifre = $_POST['uye'];
 
 
 
 
-while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-   echo ($row['ad']);
-   echo('      ');
 
-  }
+
+
+
+$sql = "INSERT INTO `musteri` ( `ad`, `soyad`, `tel`, `epost`, `sifre`, `uye`) VALUES ( '?', '?', '?', '?', '?');";
+$statement = $conn->prepare($sql);
+
+
 
 
 

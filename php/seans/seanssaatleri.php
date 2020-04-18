@@ -47,25 +47,15 @@ if ($islem == 1) {
   yazdir($conn);
 } else if ($islem == 4) {
 
-  $seansadi = $_POST['seansadi'];
-  $seansbaslangic = $_POST['seansbaslangic'];
-  $seansbitisgunu = $_POST['seansbitisgunu'];
-  $filmid = $_POST['filmid'];
-  $salonid = $_POST['salonid'];
-  $ucret = $_POST['ucret'];
-  $boyut = $_POST['boyut'];
-  $altyazi = $_POST['altyazi'];
-  $seansid = $_POST['seansid'];
-
-
-
+  $seanssaati = $_POST['seanssaati'];
+  $bitis = $_POST['bitis'];
+  $seansaaatid = $_POST['seansaaatid'];
+  
   try {
     require_once("../baglanti.php");
-    $sql = "UPDATE `seans` 
-            SET `seansadi` = '$seansadi', `filmid` = '$filmid', `baslangicgunu` = '$seansbaslangic', 
-            `bitisgunu` = '$seansbitisgunu', `salonid` = '$salonid', `ucret` = '$ucret', 
-            `altyazi` = '$altyazi', 
-            `boyut` = '$boyut' WHERE `seans`.`id` = $seansid;";
+    $sql = "UPDATE `seanssaatleri` SET 
+    `saat` = '$seanssaati',  `filmbitis` = 
+    '$bitis' WHERE `seanssaatleri`.`id` = $seansaaatid;";
 
     $stmt = $conn->prepare($sql);
 
@@ -139,7 +129,7 @@ function yazdir($conn)
         <td class="filmbitis" >' . $row[20] . '</td>
 
         <td><button  type="button" id="seanssaatleriupdate"  data-toggle="modal" data-target="#updatekategori" value="' . $row[17] . ','.  $row[13] . ','.  $row[0] .'" class="btn btn-warning update">Güncelle</button>
-        <button type="button" id="deleteseansaatleri" value="' . $row[0] . '" class="btn btn-danger delete">Sil</buttonbutton> </td>
+        <button type="button" id="deleteseansaatleri" value="' . $row[17] . '" class="btn btn-danger delete">Sil</buttonbutton> </td>
 
  
 
@@ -161,23 +151,28 @@ function yazdir($conn)
   $seans = array();
   $seansid = array();
   $salonid = array();
+  $bitis = array();
+  $baslangic = array();
   while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
 
     $seans[] = $row['seansadi'];
     $seansid[] = $row['id'];
     $salonid[] = $row['salonid'];
+    $bitis[] = $row['bitisgunu'];
+    $baslangic[] = $row['baslangicgunu'];
   }
+  
 
 
 
 
 
-  modal($seans, $seansid,    $salonid);
+  modal($seans, $seansid,    $salonid,$bitis,$baslangic);
 }
 
 
 
-function modal(array $kategori, array $kategoriid, array   $salonid)
+function modal(array $kategori, array $kategoriid, array   $salonid, array   $bitis,array $baslangic)
 {
   echo ('<div class="modal " id="insertkategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -203,8 +198,8 @@ function modal(array $kategori, array $kategoriid, array   $salonid)
   for ($i = 0; $i < count($kategoriid); ++$i) {
 
     echo ('
-      
-            <option value="' . $kategoriid[$i] . ',' . $salonid[$i] . '">' . $kategori[$i] . '</option>
+
+            <option value="' . $kategoriid[$i] . ',' . $salonid[$i] .',' . $bitis[$i]. ',' .$baslangic[$i].'">' . $kategori[$i] . '</option>
       
        ');
   }
@@ -310,7 +305,7 @@ function modal(array $kategori, array $kategoriid, array   $salonid)
   
         
       
-          <button type="submit" id="seanssaatinsert"  class="btn btn-primary insert">Ekle</button>
+          <button type="submit" id="seansaaatupdate"  class="btn btn-primary insert">Ekle</button>
         </form>
       </div>
   
